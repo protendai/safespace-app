@@ -1,9 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
+  <div class="top-div">
+    <div class="ion-text-center" style="margin-bottom:80px;">
+      <img src="../../../assets/images/logo.jpg" style="max-width:260px;padding-top: 80px;">
+    </div>
+  </div>
+
+  <form>
+
+  <div class="bottom-div">
+
+    <div class="p-top">
+      <p class="ion-text-center">
+       Welcome to Track and Trace.<br/>Login to begin
+      </p>
+    </div>
+    
+    <form>
+      
+  
+      <div class="ion-text-center pro-btn">
+        <ion-button shape="round" size="medium" fill="solid" color="secondary" routerLink="/terms">Get Started</ion-button>
+      </div>
+    </form>
+    
+  </div>
+
+</form>
+   
 </ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="ion-text-center">
+    <p style="color:#fff">Safespace V1.0.0</p>
+  </ion-toolbar>
+</ion-footer>

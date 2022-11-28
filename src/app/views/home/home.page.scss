@@ -1,0 +1,26 @@
+.header{
+    background: url('../../../assets/images/header.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 200px;
+    position: relative;
+    top: 0;
+}
+
+.quote{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    color: #fff;  
+}
+
+.quote{
+    left: 15%;
+    text-align:center; 
+    vertical-align: middle;
+}
+
+ion-card{
+    border:solid #A66CFF;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
