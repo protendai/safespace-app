@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">safespace</string>
-    <string name="title_activity_main">safespace</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">SafeSpace</string>
+    <string name="title_activity_main">SafeSpace</string>
+    <string name="package_name">io.protendai.safespace</string>
+    <string name="custom_url_scheme">io.protendai.safespace</string>
 </resources>
