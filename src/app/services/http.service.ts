@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class HttpService {
-
+  accessToken = null;
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   post(serviceName: string , data: any): Observable<any>{

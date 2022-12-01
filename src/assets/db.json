@@ -1,0 +1,16 @@
+{
+    "database": "app-db",
+    "version": 1,
+    "encrypted": false,
+    "mode": "full",
+    "tables": [
+      {
+        "name": "users",
+        "schema": [
+          { "column": "id", "value": "INTEGER PRIMARY KEY NOT NULL" },
+          { "column": "uuid", "value": "TEXT NOT NULL" },
+          { "column": "last_modified", "value": "INTEGER DEFAULT (strftime('%s', 'now'))" }
+        ]
+      }
+    ]
+  }
