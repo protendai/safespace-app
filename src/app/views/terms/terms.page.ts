@@ -29,11 +29,11 @@ export class TermsPage implements OnInit {
 
   hasAccepted(){
     this.notificationService.showLoader('Registering ...');
-      this.apiService.register().subscribe((v)=>{
+      this.apiService.register().subscribe(async (v)=>{
         console.log(v);
         try{
-          var resp = this.saveToDb(v.success);
-          console.log(resp);
+          var resp =  await this.saveToDb(v.success);
+          console.log("Response "+ resp);
           this.notificationService.presentToast(resp);
         }catch(e){
           this.notificationService.presentToast(e);
@@ -47,42 +47,52 @@ export class TermsPage implements OnInit {
   }
 
   async saveToDb(data: string){
-    
-    let db = await this.sqliteService.createConnection(
-      'app-db',
-      false,
-      'no-encryption',
-      1,
-    );
+    try{
+      let db = await this.sqliteService.createConnection(
+        'app-db',
+        false,
+        'no-encryption',
+        1,
+      );
 
-    console.log(db);
+      console.log(db);
 
-    // open db app-db
-    await db.open();
+      // open db app-db
+      await db.open();
 
-    // create tables in db
-    let ret: any = await db.execute(createSchema);
-    console.log('$$$ ret.changes.changes in db ' + ret.changes.changes);
-    if (ret.changes.changes < 0) {
-      return Promise.reject(new Error('Execute createSchema failed'));
+      // create tables in db
+      let ret: any = await db.execute(createSchema);
+      console.log('$$$ ret.changes.changes in db ' + ret.changes.changes);
+      if (ret.changes.changes < 0) {
+        return Promise.reject(new Error('Execute createSchema failed'));
+      }
+
+      console.log('$$$ Insert data');
+      // add two users in db
+      // var query = `INSERT INTO users (user_id) VALUES ("5a11afcd-cd6b-4502-88a9-a970164eb514");`
+      // var query =  `INSERT INTO users (user_id) VALUES ` + `('Tendai Karuma')`;
+      // add one user with statement and values
+      var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
+      var values = [data];
+      ret = await db.run(sqlcmd, values);
+
+      console.log(ret.changes.changes);
+      if (ret.changes.changes  !== 1) {
+        console.log('$$$ ret.changes.changes in db ' + ret.changes.changes);
+        return Promise.reject(new Error('Execute save user failed'));
+      }
+
+      console.log('$$$ Get all recrords from the table');
+      // select the created row
+      ret = await db.query('SELECT * FROM users;');
+      // 
+      console.log("User ID : " + ret.values[0].user_id);
+      // 
+      await this.sqliteService.closeConnection('app-db');
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(err);
     }
-
-    console.log('$$$ Delete all users and Insert data');
-    // add two users in db
-    var query = 'INSERT INTO users (user_id) VALUES ("5a11afcd-cd6b-4502-88a9-a970164eb514");'
-    ret = await db.execute(query);
-    if (ret.changes.lastId  !== 1) {
-      console.log('$$$ ret.changes.changes in db ' + ret.changes.lastId);
-      return Promise.reject(new Error('Execute save user-id failed'));
-    }
-
-    console.log('$$$ Get all recrords from the table');
-    // select the created row
-    ret = await db.query('SELECT * FROM users;');
-    // 
-    console.log(ret.changes);
-    // 
-    return ret;
     
   }
 
