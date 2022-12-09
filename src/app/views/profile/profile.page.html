@@ -11,19 +11,19 @@
 <div class="input-fields">
 
   <ion-item>
-    <ion-input placeholder="Name"></ion-input>
+    <ion-input name="name" [(ngModel)]="user.name" placeholder="Name"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input placeholder="Surname"></ion-input>
+    <ion-input name="surname" [(ngModel)]="user.surname" placeholder="Surname"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input placeholder="Phone"></ion-input>
+    <ion-input name="phone" [(ngModel)]="user.phone" placeholder="Phone"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input placeholder="Email" disabled="disabled"></ion-input>
+    <ion-input name="email" [(ngModel)]="user.email" placeholder="Email" disabled="disabled"></ion-input>
   </ion-item>
 </div>
 <div class="ion-text-center">

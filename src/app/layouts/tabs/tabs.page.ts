@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,13 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit {
 
-  constructor() { }
+  constructor(private storageService: StorageService,private router:Router) { }
 
   ngOnInit() {
   }
 
   logout(){
-
+    this.storageService.clear();
+    this.router.navigate(['login']);
  }
 
 }
