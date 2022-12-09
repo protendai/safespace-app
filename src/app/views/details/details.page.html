@@ -1,9 +1,26 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>details</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="primary">
+      <ion-button (click) = "goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Issue Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card>
+    <img alt="Silhouette of mountains" src="{{item.img}}" />
+    
+  
+    <ion-card-content>
+      <h3>{{item.title}}</h3>
+      <p>{{item.description}}</p>
+    </ion-card-content>
+    
+    <div class="ion-text-center">
+      <ion-button fill="solid" color="primary" shape="rounded" size="large">Report</ion-button>
+    </div>
+  </ion-card>
 </ion-content>

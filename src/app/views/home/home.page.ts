@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +26,14 @@ export class HomePage implements OnInit {
     description:'Impersonation- this can involve the creation of fake social media accounts or profiles to impersonate the victim with intention of tarnishing someones reputation',
    }
   ];
-  constructor() { }
+  constructor(private storageService: StorageService, private router: Router) { }
 
   ngOnInit() {
   }
 
   learnMore(item: any){
-    console.log(item);
+    this.storageService.setItem(item);
+    this.router.navigate(['details'])
   }
 
 }

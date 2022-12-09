@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-details',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsPage implements OnInit {
 
-  constructor() { }
+  item:any;
+  constructor(private storageService: StorageService,private navCTRL: NavController) { 
+    this.item = this.storageService.getItem();
+  }
 
   ngOnInit() {
+  }
+
+  goBack(){
+      this.navCTRL.back();
   }
 
 }
