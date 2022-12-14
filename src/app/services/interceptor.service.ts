@@ -2,6 +2,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders } f
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ApiService } from './api.service';
 import { HttpService } from './http.service';
 import { NotificationsService } from './notifications.service';
 import { StorageService } from './storage.service';
@@ -13,6 +14,7 @@ export class InterceptorService {
 
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   isRefreshToken = false;
+ 
 
   constructor(private httpService: HttpService) { }
 
@@ -34,8 +36,9 @@ export class InterceptorService {
   }
 
   private addToken(req: HttpRequest<any>){
+    
     if(this.httpService.accessToken){
-      // console.log(this.httpService.accessToken);
+      
       return req.clone({
         headers: new HttpHeaders({
           'content-type':'application/json',
@@ -47,4 +50,6 @@ export class InterceptorService {
       return req;
     }
   }
+
+  
 }

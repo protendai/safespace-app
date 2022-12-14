@@ -1,0 +1,25 @@
+.message{
+    color: black;
+    border: solid black 1px;
+    width: 80%;
+    margin-top: 15px;
+}
+
+.message-left{
+    border-left: none;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: rgb(226, 224, 224);
+}
+
+.message-right{
+    border-right: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    float: right;
+    background-color: rgb(190, 190, 190);
+}
+
+.message-message{
+    padding: 15px;
+}

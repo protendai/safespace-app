@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/services/storage.service';
+import { ApiService } from 'src/app/services/api.service';
+
 
 @Component({
   selector: 'app-tabs',
@@ -9,13 +10,13 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class TabsPage implements OnInit {
 
-  constructor(private storageService: StorageService,private router:Router) { }
+  constructor(private router:Router, private apiService: ApiService) { }
 
   ngOnInit() {
   }
 
   logout(){
-    this.storageService.clear();
+    this.apiService.logout();
     this.router.navigate(['login']);
  }
 

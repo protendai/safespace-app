@@ -9,7 +9,9 @@ import { StorageService } from './storage.service';
 })
 export class HttpService {
   accessToken = null;
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  constructor(private http: HttpClient, private storageService: StorageService) {
+    this.getAuthKey();
+   }
 
   post(serviceName: string , data: any): Observable<any>{
     const headers = new HttpHeaders({
@@ -30,4 +32,13 @@ export class HttpService {
 
     return this.http.get(url, options);
   }
+
+  async getAuthKey(){
+    const res =  await this.storageService.get('token');
+    this.accessToken = res;
+    console.log(this.accessToken);
+    return res;
+  }
+
+  
 }

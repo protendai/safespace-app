@@ -9,6 +9,7 @@ import { StorageService } from './storage.service';
 })
 export class ApiService {
   userData$ = new BehaviorSubject<any>('');
+
   constructor(private httpService: HttpService, private storageService: StorageService, private router: Router) { }
 
   register(): Observable<any>{
@@ -26,7 +27,6 @@ export class ApiService {
         this.storageService.removeItem('user');
         this.userData$.next('');
         this.router.navigate(['login']);
-        // console.log(res);
       }
     );
   }
@@ -36,5 +36,15 @@ export class ApiService {
       // console.log(res);
       this.userData$.next(res);
     });
+  }
+
+
+
+  getMessages(): Observable<any>{
+    return this.httpService.get('chat');
+  }
+
+  sendMessage(data: any): Observable<any>{
+    return this.httpService.post('chat', data);
   }
 }

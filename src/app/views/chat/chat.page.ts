@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { ApiService } from 'src/app/services/api.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +12,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatPage implements OnInit {
 
-  constructor() { }
+  message:any;
+
+  constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
+    // setInterval(function() {
+    //   console.log('fetch...')
+    // }, 10000);
+  }
 
   ngOnInit() {
+    this.getMessages();
+  }
+
+  goBack(){
+    this.router.navigate(['/tabs']);
+  }
+
+  async getMessages(){
+    this.notificationService.showLoader('Updating...');
+    this.apiService.getMessages().subscribe(async (v)=>{
+      this.notificationService.dismissLoader();
+      console.log(v);
+      try{
+       
+        if(v.success){
+          console.log(v.succeess);
+          this.notificationService.dismissLoader();
+        }
+      }catch(e){
+        this.notificationService.presentToast(e);
+      }
+      
+    });
+  }
+
+  sendMessage(){
+    let data = {
+      message:this.message
+  };
+  this.notificationService.showLoader('Sending ...');
+  this.apiService.sendMessage(data).subscribe(async (v)=>{
+    try{
+      if(v.success){
+        this.getMessages()
+        this.notificationService.presentToast(v.success);
+
+      }else{
+        this.notificationService.presentToast('Error' + v.error);
+      }
+      
+    }catch(e){
+      this.notificationService.presentToast(e);
+    }
+    
+  });
   }
 
 }
