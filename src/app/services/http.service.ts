@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class HttpService {
-  accessToken = null;
+  public accessToken = null;
   constructor(private http: HttpClient, private storageService: StorageService) {
     this.getAuthKey();
    }
@@ -36,7 +36,6 @@ export class HttpService {
   async getAuthKey(){
     const res =  await this.storageService.get('token');
     this.accessToken = res;
-    console.log(this.accessToken);
     return res;
   }
 

@@ -21,4 +21,8 @@ export class DetailsPage implements OnInit {
       this.navCTRL.back();
   }
 
+  report(){
+    this.navCTRL.navigateForward('/chat');
+  }
+
 }

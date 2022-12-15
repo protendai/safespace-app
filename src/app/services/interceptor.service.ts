@@ -16,7 +16,9 @@ export class InterceptorService {
   isRefreshToken = false;
  
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) { 
+    this.httpService.getAuthKey();
+  }
 
   // Intercepts all HTTP requests!
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -36,9 +38,8 @@ export class InterceptorService {
   }
 
   private addToken(req: HttpRequest<any>){
-    
+    console.log(this.httpService.accessToken);
     if(this.httpService.accessToken){
-      
       return req.clone({
         headers: new HttpHeaders({
           'content-type':'application/json',

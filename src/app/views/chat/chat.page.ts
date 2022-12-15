@@ -15,13 +15,14 @@ export class ChatPage implements OnInit {
   message:any;
 
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
-    // setInterval(function() {
-    //   console.log('fetch...')
+    this.getMessages();
+    // setInterval(() => {
+    //   this.getMessages();
     // }, 10000);
   }
 
   ngOnInit() {
-    this.getMessages();
+    
   }
 
   goBack(){
