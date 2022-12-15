@@ -24,8 +24,8 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    // let uuid = this.storageService.getFromDb();
-    let uuid = "1bedb356-e73d-4100-b198-6f54859e9ba3";
+    let uuid = this.storageService.getFromDb();
+    // let uuid = "1bedb356-e73d-4100-b198-6f54859e9ba3";
 
     if(uuid !== null){
       let data = {

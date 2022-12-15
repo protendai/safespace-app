@@ -27,7 +27,7 @@ export class TermsPage implements OnInit {
   }
 
   hasAccepted(){
-    return this.login("1bedb356-e73d-4100-b198-6f54859e9ba3");
+    // return this.login("1bedb356-e73d-4100-b198-6f54859e9ba3");
     // return this.login("d4dfd857-2e38-469f-a2a3-448ed5e33ca9");
 
     this.notificationService.showLoader('Registering ...');
