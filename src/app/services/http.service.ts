@@ -8,14 +8,15 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class HttpService {
-  public accessToken = null;
+  public accessToken:string = '';
   constructor(private http: HttpClient, private storageService: StorageService) {
     this.getAuthKey();
    }
 
   post(serviceName: string , data: any): Observable<any>{
     const headers = new HttpHeaders({
-      'content-type':'application/json'
+      'content-type':'application/json',
+      // 'Authorization': this.accessToken
     });
     const options = { headers, withCredintials: true};
     const url = environment.apiUrl + serviceName;
@@ -26,6 +27,7 @@ export class HttpService {
   get(serviceName: string){
     const headers = new HttpHeaders({
       'content-type':'application/json',
+      // 'Authorization': this.accessToken
     });
     const options = { headers, withCredintials: true};
     const url = environment.apiUrl + serviceName;

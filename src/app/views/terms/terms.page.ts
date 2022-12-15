@@ -27,23 +27,18 @@ export class TermsPage implements OnInit {
   }
 
   hasAccepted(){
-    // return this.login("1bedb356-e73d-4100-b198-6f54859e9ba3");
-    // return this.login("d4dfd857-2e38-469f-a2a3-448ed5e33ca9");
-
+   
     this.notificationService.showLoader('Registering ...');
-    // return this.storageService.createDb();
     this.apiService.register().subscribe(async (v)=>{
       this.notificationService.dismissLoader();
       console.log(v);
-      try{
-        var resp =  await this.storageService.saveToDb(v.success);
-        if(resp === true){
-          console.log("Login In");
+      try{ 
+        if(v.success){
           this.login(v.success);
+          this.getQuote();
           this.notificationService.dismissLoader();
+          this.notificationService.presentToast(v.success);
         }
-        console.log("Response "+ resp);
-        this.notificationService.presentToast(resp);
       }catch(e){
         this.notificationService.presentToast(e);
       }
@@ -63,12 +58,22 @@ export class TermsPage implements OnInit {
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
         this.storageService.store("user",v.user);
+        this.apiService.setUser();
         // Navigate to Tabs
         this.router.navigate(['tabs']);
       }catch(e){
         this.notificationService.presentToast(e);
       }
       
+    });
+  }
+
+  getQuote(){
+    this.apiService.getQuote().subscribe(async (v)=>{
+      console.log(v.success); 
+        if(v.success){
+          this.apiService.setQuote(v.success);
+        }
     });
   }
 }

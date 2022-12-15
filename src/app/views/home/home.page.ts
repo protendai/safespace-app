@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 import { HttpService } from 'src/app/services/http.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class HomePage implements OnInit {
 
+  quote:any;
   items = [
    {
     img:'../../../assets/images/cb.png',
@@ -27,15 +30,25 @@ export class HomePage implements OnInit {
     description:'Impersonation- this can involve the creation of fake social media accounts or profiles to impersonate the victim with intention of tarnishing someones reputation',
    }
   ];
-  constructor(private httpService: HttpService,private storageService: StorageService, private router: Router) { }
+  constructor(
+    private httpService: HttpService,
+    private apiService: ApiService,
+    private storageService: StorageService,
+    private router: Router,
+    ) { 
+      
+    }
 
   ngOnInit() {
     this.httpService.getAuthKey();
+    this.quote = this.apiService.getQuotes();
   }
 
   learnMore(item: any){
     this.storageService.setItem(item);
     this.router.navigate(['details'])
   }
+
+
 
 }

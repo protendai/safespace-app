@@ -13,16 +13,21 @@ import { StorageService } from 'src/app/services/storage.service';
 export class ChatPage implements OnInit {
 
   message:any;
+  userId:any;
+  messages:any;
+  user:any;
 
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
+    this.user = this.apiService.getUser();
+    console.log(this.user);
     this.getMessages();
-    // setInterval(() => {
-    //   this.getMessages();
-    // }, 10000);
+    setInterval(() => {
+      this.getMessages();
+    }, 30000);
   }
 
   ngOnInit() {
-    
+    this.getMessages();
   }
 
   goBack(){
@@ -32,13 +37,14 @@ export class ChatPage implements OnInit {
   async getMessages(){
     this.notificationService.showLoader('Updating...');
     this.apiService.getMessages().subscribe(async (v)=>{
-      this.notificationService.dismissLoader();
+      // this.notificationService.dismissLoader();
       console.log(v);
       try{
        
         if(v.success){
-          console.log(v.succeess);
-          this.notificationService.dismissLoader();
+          this.messages = v.success[0].messages;
+          this.userId = v.success[0].user_id;
+          // this.notificationService.dismissLoader();
         }
       }catch(e){
         this.notificationService.presentToast(e);
@@ -48,24 +54,15 @@ export class ChatPage implements OnInit {
   }
 
   sendMessage(){
-    let data = {
-      message:this.message
-  };
+  let data = { message:this.message };
   this.notificationService.showLoader('Sending ...');
-  this.apiService.sendMessage(data).subscribe(async (v)=>{
-    try{
+  this.apiService.sendMessage(data).subscribe((v)=>{
+      console.log(v);
       if(v.success){
-        this.getMessages()
-        this.notificationService.presentToast(v.success);
-
+        this.message = '';
       }else{
-        this.notificationService.presentToast('Error' + v.error);
+        this.notificationService.presentToast('Error' + v);
       }
-      
-    }catch(e){
-      this.notificationService.presentToast(e);
-    }
-    
   });
   }
 

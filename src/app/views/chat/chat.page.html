@@ -11,30 +11,21 @@
 
 <ion-content class="ion-padding">
   <div class="chat">
-    <div class="message message-left">
-      <ion-chip>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="../../../assets/avatar.svg" />
-        </ion-avatar>
-        <ion-label>Me</ion-label>
-      </ion-chip>
-      <div class="message-message">
-        Hello there...
-      </div>
-    </div>
-    <div class="message message-right">
-      <div class="ion-text-right">
+
+    <div *ngFor="let item of messages" class="message {{item.sender_id === userId ? 'message-left' : 'message-right'}}">
+      <div class="{{item.sender_id === userId ? '' : 'ion-text-right'}}">
         <ion-chip>
           <ion-avatar>
-            <img alt="Silhouette of a person's head" src="../../../assets/avatar.svg"  />
+            <img alt="Silhouette of a person's head" src="../../../assets/avatar.svg" />
           </ion-avatar>
-          <ion-label>Operator</ion-label>
+          <ion-label>{{item.sender_id === userId ? 'Me' : 'Operator'}}</ion-label>
         </ion-chip>
       </div>
       <div class="message-message">
-        Hey  i am the operator
+        {{ item.message }}
       </div>
     </div>
+
   </div>
 </ion-content>
 

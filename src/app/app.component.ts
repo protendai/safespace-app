@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SqliteService } from './services/sqlite.service';
 import { Platform } from '@ionic/angular';
+import { StorageService } from './services/storage.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(async () => {
+
       this._sqlite.initializePlugin().then(ret => {
         this.initPlugin = ret;
         console.log('>>>> in App  this.initPlugin ' + this.initPlugin);

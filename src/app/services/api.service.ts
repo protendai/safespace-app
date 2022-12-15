@@ -9,6 +9,8 @@ import { StorageService } from './storage.service';
 })
 export class ApiService {
   userData$ = new BehaviorSubject<any>('');
+  quoteData$ = new BehaviorSubject<any>('');
+  user:any;
 
   constructor(private httpService: HttpService, private storageService: StorageService, private router: Router) { }
 
@@ -21,24 +23,45 @@ export class ApiService {
   }
 
   logout(){
-    this.storageService.clear();
+    // this.storageService.clear();
     this.router.navigate(['login']);
   }
 
-  getUserData(){
-    this.storageService.get('user').then(res =>{
-      // console.log(res);
-      this.userData$.next(res);
-    });
-  }
-
-
+  
+ getQuote(): Observable<any>{
+  return this.httpService.get('quote');
+ }
 
   getMessages(): Observable<any>{
     return this.httpService.get('chat');
   }
 
   sendMessage(data: any): Observable<any>{
-    return this.httpService.post('chat', data);
+    return this.httpService.post('chat',data);
+  }
+
+  setQuote(data: any){
+    this.quoteData$.next(data);
+  }
+
+  getQuotes(){
+    return this.quoteData$;
+  }
+
+  getUserData(){
+    this.storageService.get('user').then(res =>{
+      this.userData$.next(res);
+      return res;
+    });
+  }
+
+  async setUser(){
+    var data  =  await this.storageService.get('user');
+    this.user = JSON.parse(data);
+    console.log(this.user);
+  }
+
+  getUser(){
+    return this.user;
   }
 }

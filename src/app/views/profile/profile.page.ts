@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 export class ProfilePage implements OnInit {
 
   user:any;
-  constructor(private storaeService: StorageService) {
+  constructor(private storageService: StorageService) {
     this.getUser();
    }
 
@@ -18,7 +18,7 @@ export class ProfilePage implements OnInit {
   }
 
   async getUser(){
-    var data  =  await this.storaeService.get('user');
+    var data  =  await this.storageService.get('user');
     this.user = JSON.parse(data);
     console.log(this.user);
   }

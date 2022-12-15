@@ -42,6 +42,7 @@ export class StorageService {
         let res = await this.sqliteService.isDatabase('app-db');
         if(res.result === true){
           // this.sqliteService.deleteOldDatabases("",["app-db"]);
+          console.log('$$$ Database already exists');
           return true;
         }
         // Connect to DB and create new
@@ -52,12 +53,14 @@ export class StorageService {
 
         // create tables in db
         let ret: any = await db.execute(createSchema);
-        console.log('$$$ changes in db ' + ret.changes.changes);
+        console.log('$$$$ Create Tables' + ret.changes.changes);
         if (ret.changes.changes < 0) {
           return Promise.reject(new Error('Execute createSchema failed'));
         }
         // Close connection
+        console.log('$$$ Close Connection');
         await this.sqliteService.closeConnection('app-db');
+        await db.close();
         // if not errors return true
         return true;
       }catch(e){
@@ -68,13 +71,10 @@ export class StorageService {
   async saveToDb(data: string){
     try{
       
-      let dbConnect = await this.createDb();
-      if(dbConnect !== true){
-        return "Error failed to connect to db";
-      }
       let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
      
       await db.open();
+      
 
       console.log('$$$ Insert data');
       var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
@@ -87,7 +87,9 @@ export class StorageService {
         return Promise.reject(new Error('Execute save user failed'));
       }
 
-      ret = await this.sqliteService.closeConnection('app-db');
+      console.log('$$$ Close Connection');
+      await this.sqliteService.closeConnection('app-db');
+      await db.close();
 
       return true;
     } catch (err) {
@@ -104,9 +106,11 @@ export class StorageService {
       // select the created row
       let ret:any = await db.query('SELECT * FROM users;');
       // console log ID
-      console.log("User ID : " + ret.values[0].user_id);
+      console.log("$$$ User ID : " + ret.values[0].user_id);
       // close connection to DB
-      ret = await this.sqliteService.closeConnection('app-db');
+      console.log('$$$ Close Connection');
+      await this.sqliteService.closeConnection('app-db');
+      await db.close();
       //  return user id
       return ret.values[0].user_id;
     } catch (err) {
