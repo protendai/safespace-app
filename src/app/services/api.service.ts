@@ -21,14 +21,8 @@ export class ApiService {
   }
 
   logout(){
-    this.storageService.removeItem('token').then(
-      res =>{
-        this.storageService.clear();
-        this.storageService.removeItem('user');
-        this.userData$.next('');
-        this.router.navigate(['login']);
-      }
-    );
+    this.storageService.clear();
+    this.router.navigate(['login']);
   }
 
   getUserData(){

@@ -38,13 +38,13 @@ export class InterceptorService {
   }
 
   private addToken(req: HttpRequest<any>){
-    console.log(this.httpService.accessToken);
+    
     if(this.httpService.accessToken){
+      console.log(this.httpService.accessToken);
       return req.clone({
         headers: new HttpHeaders({
           'content-type':'application/json',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          Authorization: this.httpService.accessToken
+          'Authorization': this.httpService.accessToken
         }),
       });
     }else{

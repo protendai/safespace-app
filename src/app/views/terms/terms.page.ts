@@ -64,7 +64,6 @@ export class TermsPage implements OnInit {
         this.storageService.store("token",v.access_token);
         this.storageService.store("user",v.user);
         // Navigate to Tabs
-        this.httpService.getAuthKey();
         this.router.navigate(['tabs']);
       }catch(e){
         this.notificationService.presentToast(e);

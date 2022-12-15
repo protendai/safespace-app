@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/services/http.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -26,9 +27,10 @@ export class HomePage implements OnInit {
     description:'Impersonation- this can involve the creation of fake social media accounts or profiles to impersonate the victim with intention of tarnishing someones reputation',
    }
   ];
-  constructor(private storageService: StorageService, private router: Router) { }
+  constructor(private httpService: HttpService,private storageService: StorageService, private router: Router) { }
 
   ngOnInit() {
+    this.httpService.getAuthKey();
   }
 
   learnMore(item: any){

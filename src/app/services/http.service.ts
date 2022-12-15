@@ -36,6 +36,7 @@ export class HttpService {
   async getAuthKey(){
     const res =  await this.storageService.get('token');
     this.accessToken = res;
+    // console.log(res);
     return res;
   }
 
