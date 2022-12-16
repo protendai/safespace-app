@@ -109,5 +109,7 @@ export class LoginPage implements OnInit {
       console.log('$$$ Connecting to database');
       Connected = true;
     }
+
+    this.notificationService.dismissLoader();
   }
 }
