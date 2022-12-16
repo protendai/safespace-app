@@ -124,7 +124,5 @@ export class LoginPage implements OnInit {
       console.log('$$$ Database or Connection failed');
       return false;
     }
-
-
   }
 }
