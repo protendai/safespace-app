@@ -28,7 +28,7 @@ export class TermsPage implements OnInit {
   }
 
   hasAccepted(){
-    return this.login('d84a7bf9-4a44-4bca-8f0d-defc0e607c87');
+    // return this.login('d84a7bf9-4a44-4bca-8f0d-defc0e607c87');
     this.notificationService.showLoader('Registering ...');
     this.apiService.register().subscribe(async (v)=>{
       this.notificationService.dismissLoader();
