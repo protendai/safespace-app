@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { HttpService } from 'src/app/services/http.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { SqliteService } from 'src/app/services/sqlite.service';
 
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -20,13 +21,14 @@ export class TermsPage implements OnInit {
     private storageService: StorageService,
     private notificationService: NotificationsService,
     private router: Router,
+    private sqliteService : SqliteService
     ) { }
 
   ngOnInit() {
   }
 
   hasAccepted(){
-   
+    return this.login('d84a7bf9-4a44-4bca-8f0d-defc0e607c87');
     this.notificationService.showLoader('Registering ...');
     this.apiService.register().subscribe(async (v)=>{
       this.notificationService.dismissLoader();
@@ -45,11 +47,26 @@ export class TermsPage implements OnInit {
     });
   }
 
-  login(myid: any){
+  async login(myid: any){
+    this.notificationService.showLoader('Login In ...');
     let data = {
         id:myid
     };
-    this.notificationService.showLoader('Login In ...');
+    console.log('$$$ Closing all Connections');
+    await this.sqliteService.closeAllConnections();
+    console.log('$$$ New Connection');
+    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+    await db.open();
+    console.log('$$$ Inserting UUID');
+    var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
+    var values = [myid];
+    let ret:any = await db.run(sqlcmd, values);
+
+    console.log('$$$ Inserting Result ' + ret.changes.changes);
+    if (ret.changes.changes  !== 1) {
+      console.log('Execute save user failed');
+    }
+
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
 

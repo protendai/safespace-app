@@ -35,7 +35,6 @@ export class HomePage implements OnInit {
     private storageService: StorageService,
     private router: Router,
     ) { 
-      this.quote = this.apiService.getQuotes();
     }
 
   ngOnInit() {
@@ -47,7 +46,5 @@ export class HomePage implements OnInit {
     this.storageService.setItem(item);
     this.router.navigate(['details'])
   }
-
-
 
 }

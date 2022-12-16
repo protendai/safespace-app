@@ -8,11 +8,13 @@
 
 <div class="header">
   <div class="quote">
-    <div class="ion-text-center">
+
+    <div class="ion-text-center" *ngIf="quote">
       {{ quote.description}}
       <br/>
       <i>{{ quote.author }}</i>
     </div>
+    
   </div>
 </div>
 <div class="content">

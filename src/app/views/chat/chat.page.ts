@@ -34,16 +34,12 @@ export class ChatPage implements OnInit {
   }
 
   async getMessages(){
-    // this.notificationService.showLoader('Updating...');
     this.apiService.getMessages().subscribe(async (v)=>{
-      // this.notificationService.dismissLoader();
-      // console.log(v);
       try{
        
         if(v.success){
           this.messages = v.success[0].messages;
           this.userId = v.success[0].user_id;
-          // this.notificationService.dismissLoader();
         }
       }catch(e){
         console.log(e);
