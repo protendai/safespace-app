@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
 
   async login(){
     var userId;
-    var res = await this.setup();
-    if(res == true){
+    await this.setup();
+
       console.log('$$$ Closing all Connections');
       await this.sqliteService.closeAllConnections();
       console.log('$$$ New Connection');
@@ -63,13 +63,8 @@ export class LoginPage implements OnInit {
           }
         });
       }else{
-        this.router.navigate(['terms']);
+        this.notificationService.presentToast('Failed to login , user id not found ' + userId);
       }
-    }else{
-      this.notificationService.presentToast('Database Setup failed');
-    }
-    
-
   }
 
   async setup(){
@@ -99,7 +94,8 @@ export class LoginPage implements OnInit {
         console.log('$$$ Execute createSchema failed');
       }
 
-      Database = true;
+      this.notificationService.dismissLoader();
+      this.router.navigate(['terms']);
     }
 
     // Check if Connection Exists
@@ -112,17 +108,6 @@ export class LoginPage implements OnInit {
       await db.open();
       console.log('$$$ Connecting to database');
       Connected = true;
-    }
-
-    Connected = true;
-    this.notificationService.dismissLoader();
-
-    if(Connected && Database){
-      console.log('$$$ Database and Connection available');
-      return true;
-    }else{
-      console.log('$$$ Database or Connection failed');
-      return false;
     }
   }
 }
