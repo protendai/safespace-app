@@ -20,7 +20,6 @@ export class TermsPage implements OnInit {
     private storageService: StorageService,
     private notificationService: NotificationsService,
     private router: Router,
-    private httpService: HttpService
     ) { }
 
   ngOnInit() {
@@ -37,7 +36,7 @@ export class TermsPage implements OnInit {
           this.login(v.success);
           this.getQuote();
           this.notificationService.dismissLoader();
-          this.notificationService.presentToast(v.success);
+          // this.notificationService.presentToast(v.success);
         }
       }catch(e){
         this.notificationService.presentToast(e);
@@ -70,9 +69,10 @@ export class TermsPage implements OnInit {
 
   getQuote(){
     this.apiService.getQuote().subscribe(async (v)=>{
-      console.log(v.success); 
+      console.log(v); 
         if(v.success){
-          this.apiService.setQuote(v.success);
+          this.storageService.store("quote",v.success);
+          this.apiService.setQuote();
         }
     });
   }

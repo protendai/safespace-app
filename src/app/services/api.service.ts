@@ -11,6 +11,7 @@ export class ApiService {
   userData$ = new BehaviorSubject<any>('');
   quoteData$ = new BehaviorSubject<any>('');
   user:any;
+  quote:any;
 
   constructor(private httpService: HttpService, private storageService: StorageService, private router: Router) { }
 
@@ -40,12 +41,14 @@ export class ApiService {
     return this.httpService.post('chat',data);
   }
 
-  setQuote(data: any){
-    this.quoteData$.next(data);
+  async setQuote(){
+    var data  =  await this.storageService.get('quote');
+    this.quote = JSON.parse(data);
+    console.log(this.quote);
   }
 
   getQuotes(){
-    return this.quoteData$;
+    return this.quote;
   }
 
   getUserData(){

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { HttpService } from 'src/app/services/http.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -36,7 +35,7 @@ export class HomePage implements OnInit {
     private storageService: StorageService,
     private router: Router,
     ) { 
-      
+      this.quote = this.apiService.getQuotes();
     }
 
   ngOnInit() {

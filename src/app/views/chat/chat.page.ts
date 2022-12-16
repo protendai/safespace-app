@@ -20,14 +20,13 @@ export class ChatPage implements OnInit {
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
     this.user = this.apiService.getUser();
     console.log(this.user);
-    this.getMessages();
     setInterval(() => {
       this.getMessages();
     }, 30000);
   }
 
   ngOnInit() {
-    this.getMessages();
+
   }
 
   goBack(){
@@ -35,10 +34,10 @@ export class ChatPage implements OnInit {
   }
 
   async getMessages(){
-    this.notificationService.showLoader('Updating...');
+    // this.notificationService.showLoader('Updating...');
     this.apiService.getMessages().subscribe(async (v)=>{
       // this.notificationService.dismissLoader();
-      console.log(v);
+      // console.log(v);
       try{
        
         if(v.success){
@@ -47,7 +46,7 @@ export class ChatPage implements OnInit {
           // this.notificationService.dismissLoader();
         }
       }catch(e){
-        this.notificationService.presentToast(e);
+        console.log(e);
       }
       
     });
@@ -60,6 +59,7 @@ export class ChatPage implements OnInit {
       console.log(v);
       if(v.success){
         this.message = '';
+        this.getMessages();
       }else{
         this.notificationService.presentToast('Error' + v);
       }
