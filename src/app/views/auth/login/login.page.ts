@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Console } from 'console';
 import { ApiService } from 'src/app/services/api.service';
-import { HttpService } from 'src/app/services/http.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SqliteService } from 'src/app/services/sqlite.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -24,11 +22,7 @@ export class LoginPage implements OnInit {
     private router:Router,
     private sqliteService: SqliteService
     ) { 
-      // this.storageService.get('uuid').then((val)=>{
-      //   this.userId = val
-      //   console.log(val)
-      // })
-      // console.log(this.userId);
+      
     }
 
   ngOnInit() {
@@ -37,43 +31,49 @@ export class LoginPage implements OnInit {
 
   async login(){
     var userId;
-    this.setup();
-    console.log('$$$ Closing all Connections');
-    await this.sqliteService.closeAllConnections();
-    console.log('$$$ New Connection');
-    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-    await db.open();
-    console.log('$$$ Get user UUID');
+    var res = await this.setup();
+    if(res == true){
+      console.log('$$$ Closing all Connections');
+      await this.sqliteService.closeAllConnections();
+      console.log('$$$ New Connection');
+      let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+      await db.open();
+      console.log('$$$ Get user UUID');
+    
+      let ret:any = await db.query('SELECT * FROM users;');
+      // console log ID
+      console.log("$$$ User ID : " + ret.values[0].user_id);
+      userId = ret.values[0].user_id;
   
-    let ret:any = await db.query('SELECT * FROM users;');
-    // console log ID
-    console.log("$$$ User ID : " + ret.values[0].user_id);
-    userId = ret.values[0].user_id;
-
-    if(userId !== null){
-      let data = {
-          id:userId
-      };
-      this.notificationService.showLoader('Login In ...');
-      // Login using ID
-      this.apiService.login(data).subscribe(async (v)=>{
-        // console.log(v.access_token);
-        try{
-          // Save Token and User Data
-          this.storageService.store("token",v.access_token);
-          this.storageService.store("user",v.user);
-          // Navigate to Tabs
-          this.router.navigate(['tabs']);
-        }catch(e){
-          this.notificationService.presentToast(e);
-        }
-      });
+      if(userId !== null){
+        let data = {
+            id:userId
+        };
+        this.notificationService.showLoader('Login In ...');
+        // Login using ID
+        this.apiService.login(data).subscribe(async (v)=>{
+          try{
+            // Save Token and User Data
+            this.storageService.store("token",v.access_token);
+            this.storageService.store("user",v.user);
+            // Navigate to Tabs
+            this.router.navigate(['tabs']);
+          }catch(e){
+            this.notificationService.presentToast(e);
+          }
+        });
+      }else{
+        this.router.navigate(['terms']);
+      }
     }else{
-      this.router.navigate(['terms']);
+      this.notificationService.presentToast('Database Setup failed');
     }
+    
+
   }
 
   async setup(){
+
     var db:any;
     var Connected:boolean;
     var Database:boolean
