@@ -28,7 +28,7 @@ export class TermsPage implements OnInit {
   }
 
   hasAccepted(){
-    // return this.login('d84a7bf9-4a44-4bca-8f0d-defc0e607c87');
+    return this.login('ae808430-bc84-4628-b0a6-d463c445e323');
     this.notificationService.showLoader('Registering ...');
     this.apiService.register().subscribe(async (v)=>{
       this.notificationService.dismissLoader();
@@ -52,20 +52,20 @@ export class TermsPage implements OnInit {
     let data = {
         id:myid
     };
-    console.log('$$$ Closing all Connections');
-    await this.sqliteService.closeAllConnections();
-    console.log('$$$ New Connection');
-    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-    await db.open();
-    console.log('$$$ Inserting UUID');
-    var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
-    var values = [myid];
-    let ret:any = await db.run(sqlcmd, values);
+    // console.log('$$$ Closing all Connections');
+    // await this.sqliteService.closeAllConnections();
+    // console.log('$$$ New Connection');
+    // let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+    // await db.open();
+    // console.log('$$$ Inserting UUID');
+    // var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
+    // var values = [myid];
+    // let ret:any = await db.run(sqlcmd, values);
 
-    console.log('$$$ Inserting Result ' + ret.changes.changes);
-    if (ret.changes.changes  !== 1) {
-      console.log('Execute save user failed');
-    }
+    // console.log('$$$ Inserting Result ' + ret.changes.changes);
+    // if (ret.changes.changes  !== 1) {
+    //   console.log('Execute save user failed');
+    // }
 
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{

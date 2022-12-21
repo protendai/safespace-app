@@ -20,4 +20,8 @@ export class TabsPage implements OnInit {
     this.router.navigate(['login']);
  }
 
+ goToChat(){
+  this.router.navigate(['chat']);
+ }
+
 }

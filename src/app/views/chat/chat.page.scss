@@ -10,7 +10,7 @@
     border-left: none;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: rgb(226, 224, 224);
+    background-color: #A66CFF;
     float:left;
 }
 
@@ -19,9 +19,11 @@
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     float: right;
-    background-color: rgb(190, 190, 190);
+    background-color: #AFB4FF;
 }
 
 .message-message{
     padding: 15px;
+    font-weight: 500;
+    color:#FFF;
 }

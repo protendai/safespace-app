@@ -30,6 +30,8 @@ export class LoginPage implements OnInit {
   }
 
   async login(){
+     return this.router.navigate(['terms']);
+    // 
     var userId;
     await this.setup();
 
