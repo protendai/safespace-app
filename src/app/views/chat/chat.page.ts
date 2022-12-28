@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
@@ -10,17 +10,17 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit,OnDestroy {
 
   message:any;
   userId:any;
   messages:any;
   user:any;
-
+  t: any;
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
     this.user = this.apiService.getUser();
     console.log(this.user);
-    setInterval(() => {
+    this.t = setInterval(() => {
       this.getMessages();
     }, 30000);
   }
@@ -61,5 +61,10 @@ export class ChatPage implements OnInit {
       }
   });
   }
+
+  ngOnDestroy(){
+    console.log('Stopped Interval');
+    clearInterval(this.t);
+  } 
 
 }

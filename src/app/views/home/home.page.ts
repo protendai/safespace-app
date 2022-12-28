@@ -15,7 +15,7 @@ export class HomePage implements OnInit {
   items = [
    {
     img:'../../../assets/images/1.png',
-    title:'Are you being bullied on your phone?',
+    title:'Are you being bullied?',
     description:'Bullying unwanted, aggressive behaviour among school-aged children that involves a real or perceived power imbalance. This usually happens face-to-face or online (cyberbullying)',
    },
    {

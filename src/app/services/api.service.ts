@@ -15,8 +15,8 @@ export class ApiService {
 
   constructor(private httpService: HttpService, private storageService: StorageService, private router: Router) { }
 
-  register(): Observable<any>{
-    return this.httpService.get('auth/register');
+  register(data:any): Observable<any>{
+    return this.httpService.post('auth/register', data);
   }
 
   login(data: any): Observable<any>{
@@ -29,9 +29,9 @@ export class ApiService {
   }
 
   
- getQuote(): Observable<any>{
-  return this.httpService.get('quote');
- }
+  getQuote(): Observable<any>{
+    return this.httpService.get('quote');
+  }
 
   getMessages(): Observable<any>{
     return this.httpService.get('chat');
@@ -66,5 +66,15 @@ export class ApiService {
 
   getUser(){
     return this.user;
+  }
+
+  // Notifications
+  getNotifications(): Observable<any>{
+    return this.httpService.get('notifications');
+  }
+
+  // Payment
+  pay(data:any): Observable<any>{
+    return this.httpService.post('payment',data);
   }
 }

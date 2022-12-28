@@ -1,0 +1,57 @@
+ion-content{
+    --ion-background-color: #fff;
+  }
+  
+  ion-toolbar{
+    --ion-background-color:#A66CFF;
+  
+  }
+  
+   
+  ion-item{
+    background-color: #fff;
+    border:solid white 2px;
+    border-radius: 15px;
+    margin-top: 20px;
+  }
+  
+  ion-input{
+    background-color: #fff;
+  }
+  
+  .login-div{
+    padding-top: 5px;
+  }
+  
+  .p-top{
+    padding:5px;
+    color:#fff;
+  }
+  
+  .top-div {
+    height: 50vh;
+  }
+  .bottom-div{
+    height: 50vh;
+    padding-top:25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top-left-radius:60px;
+    border-top-right-radius:60px;
+    background-color:#A66CFF;
+  }
+
+  .pro-btn{
+    margin-top: 25px;
+  }
+  
+  .error{
+    color:#FFF;
+    font-size:14px;
+  
+  }
+  
+  .pro-label{
+    color:#FFF;
+    font-weight: 500;
+  }
