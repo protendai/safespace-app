@@ -77,4 +77,13 @@ export class ApiService {
   pay(data:any): Observable<any>{
     return this.httpService.post('payment',data);
   }
+
+  // Profile
+  getProfile(): Observable<any>{
+    return this.httpService.get('profile');
+  }
+
+  updateProfile(data:any): Observable<any>{
+    return this.httpService.post('profile',data);
+  }
 }

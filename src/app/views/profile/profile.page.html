@@ -11,22 +11,36 @@
 <div class="input-fields">
 
   <ion-item>
-    <ion-input name="name" [(ngModel)]="user.name" placeholder="Name"></ion-input>
+    <ion-input name="name" [(ngModel)]="data.name" placeholder="Name"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input name="surname" [(ngModel)]="user.surname" placeholder="Surname"></ion-input>
+    <ion-input name="surname" [(ngModel)]="data.surname" placeholder="Surname"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input name="phone" [(ngModel)]="user.phone" placeholder="Phone"></ion-input>
+    <ion-input name="phone" [(ngModel)]="data.phone" placeholder="Phone"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input name="email" [(ngModel)]="user.email" placeholder="Email" disabled="disabled"></ion-input>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="datetime" presentation="date" name="dob" [(ngModel)]="data.dob"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+
+  <ion-item>
+    <ion-input name="school" [(ngModel)]="data.school" placeholder="School"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input name="email" [(ngModel)]="data.email" placeholder="Email" disabled="disabled"></ion-input>
   </ion-item>
 </div>
 <div class="ion-text-center">
-  <ion-button shape="rounded" fill="solid" color="primary">Update Profile</ion-button>
+  <ion-button shape="rounded" fill="solid" color="primary" (click)="updateProfile()">Update Profile</ion-button>
 </div>
 </ion-content>

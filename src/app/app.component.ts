@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SqliteService } from './services/sqlite.service';
 import { Platform } from '@ionic/angular';
 import { StorageService } from './services/storage.service';
+import { NotificationsService } from './services/notifications.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -9,7 +10,7 @@ import { StorageService } from './services/storage.service';
 })
 export class AppComponent {
   private initPlugin: boolean | undefined;
-  constructor( private platform: Platform,private _sqlite: SqliteService) {
+  constructor( private platform: Platform,private _sqlite: SqliteService, private notificataionService: NotificationsService) {
    this.initializeApp();
   }
 
@@ -20,6 +21,9 @@ export class AppComponent {
         this.initPlugin = ret;
         console.log('>>>> in App  this.initPlugin ' + this.initPlugin);
       });
+
+      this.notificataionService.initPush();
+
     });
   }
 }

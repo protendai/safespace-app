@@ -31,7 +31,7 @@ export class RegisterPage implements OnInit {
 
   register(){
     console.log(this.data);
-    return 0;
+    // return 0;
     // return this.login('e5f25efe-319a-4644-9417-78a4bca2b01b');
     this.notificationService.showLoader('Registering ...');
     this.apiService.register(this.data).subscribe(async (v)=>{
@@ -54,7 +54,8 @@ export class RegisterPage implements OnInit {
   async login(myid: any){
     this.notificationService.showLoader('Login In ...');
     let data = {
-        id:myid
+        id:myid,
+        fbToken: this.notificationService.getfbToken()
     };
     // console.log('$$$ Closing all Connections');
     // await this.sqliteService.closeAllConnections();

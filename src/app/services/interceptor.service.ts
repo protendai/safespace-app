@@ -23,7 +23,7 @@ export class InterceptorService {
   }
 
   private isInAccessList(url: string): boolean{
-    if(url === `${environment.apiUrl}auth/login`){
+    if(url === `${environment.apiUrl}auth/login` || url === `${environment.apiUrl}auth/register`){
       return true;
     }else{
       return false;
