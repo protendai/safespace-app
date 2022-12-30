@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./views/auth/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'payments',
+    loadChildren: () => import('./views/payments/payments.module').then( m => m.PaymentsPageModule)
+  },
 ];
 
 @NgModule({

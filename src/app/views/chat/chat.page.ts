@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { StorageService } from 'src/app/services/storage.service';
+
 
 @Component({
   selector: 'app-chat',
@@ -11,27 +10,36 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit,OnDestroy {
-
+  loaded = false;
   message:any;
   userId:any;
   messages:any;
   user:any;
   t: any;
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
-    this.user = this.apiService.getUser();
-    console.log(this.user);
-    this.t = setInterval(() => {
-      this.getMessages();
-    }, 30000);
+    
   }
 
   ngOnInit() {
-
+    this.notificationService.showLoader('Loading messages...');
+    //  Get user data
+    this.apiService.setUser();
+    this.user = this.apiService.getUser();
+    console.log(this.apiService.user);
+    //  Start timer
+    this.t = setInterval(() => {
+      this.getMessages();
+    }, 10000);
+    // disable skeletons
+    this.loaded = true;
+    this.notificationService.dismissLoader();
   }
 
   goBack(){
     this.router.navigate(['/tabs']);
   }
+
+
 
   async getMessages(){
     this.apiService.getMessages().subscribe(async (v)=>{

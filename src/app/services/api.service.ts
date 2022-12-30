@@ -62,6 +62,10 @@ export class ApiService {
     var data  =  await this.storageService.get('user');
     this.user = JSON.parse(data);
     console.log(this.user);
+
+    if(this.user.payment_status !== 1){
+      this.router.navigate(['payments']);
+    }
   }
 
   getUser(){

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,19 @@ export class NotificationsService {
 
   fbToken:any;
 
-  constructor(private toastController: ToastController,private loadingCtrl: LoadingController) { }
+  constructor(private router: Router, private toastController: ToastController,private loadingCtrl: LoadingController,private alertController: AlertController) { }
 
   //  Basic Notifications
+
+  async presentAlert(title:any,infoMessage: any) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: infoMessage,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
 
   async presentToast(infoMessage: any) {
     const toast = await this.toastController.create({
@@ -45,7 +56,7 @@ export class NotificationsService {
   // Firebase and Push Notifications
   initPush() {
     if (Capacitor.getPlatform() !== 'web') {
-      this.presentToast('Fb setup');
+      console.log('>>>>>>> Fb setup');
       this.registerPush();
     }
   }
@@ -54,19 +65,19 @@ export class NotificationsService {
     PushNotifications.requestPermissions().then(permission => {
         if (permission.receive === 'granted') {
             PushNotifications.register();
-            this.presentToast('Permission Granted');
+            console.log('Permission Granted');
         }
         else {
             // If permission is not granted
             console.log('Permission not granted');
-            this.presentToast('Permission Not Granted');
+            console.log('Permission Not Granted');
         }
     });
 
     PushNotifications.addListener('registration', (token) => {
-        console.log(token);
-        this.fbToken = token;
-        this.presentToast(token);
+        console.log('>>>>>> FB Token '+ token.value);
+        this.fbToken = token.value;
+        
     });
 
     PushNotifications.addListener('registrationError', (err)=> {
