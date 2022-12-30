@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-payments',
@@ -17,7 +18,7 @@ export class PaymentsPage implements OnInit {
     paymentMethod:'',
     paymentGateway:'Paynow'
   };
-  constructor(private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { }
+  constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { }
 
   ngOnInit() {
     this.presentAlert()
@@ -62,11 +63,29 @@ export class PaymentsPage implements OnInit {
     this.apiService.pay(this.data).subscribe((v)=>{
         console.log(v);
         if(v.success){
+          this.updateProfile();
           this.notificationService.presentToast(v.success);
         }else{
           this.notificationService.presentToast('Error' + v);
         }
     });
+  }
+
+  updateProfile(){
+    console.log(this.data);
+    this.notificationService.showLoader('Processing Payment');
+    this.apiService.getProfile().subscribe((v)=>{
+        console.log(v);
+        if(v.success){
+          console.log(v.success);
+          this.storageService.store("user",v.success);
+          this.router.navigate(['/tabs']);
+        }else{
+          this.notificationService.presentToast('Error' + v);
+        }
+    });
+
+    this.notificationService.dismissLoader();
   }
 
 }
