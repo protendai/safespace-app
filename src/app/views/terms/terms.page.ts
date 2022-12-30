@@ -15,10 +15,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class TermsPage implements OnInit {
 
-  constructor(
-
-    private router: Router,
-    ) { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
   }

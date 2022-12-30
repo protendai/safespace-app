@@ -52,25 +52,27 @@ export class RegisterPage implements OnInit {
   }
 
   async login(myid: any){
+    
     this.notificationService.showLoader('Login In ...');
     let data = {
         id:myid,
         fbToken: this.notificationService.getfbToken()
     };
-    // console.log('$$$ Closing all Connections');
-    // await this.sqliteService.closeAllConnections();
-    // console.log('$$$ New Connection');
-    // let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-    // await db.open();
-    // console.log('$$$ Inserting UUID');
-    // var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
-    // var values = [myid];
-    // let ret:any = await db.run(sqlcmd, values);
 
-    // console.log('$$$ Inserting Result ' + ret.changes.changes);
-    // if (ret.changes.changes  !== 1) {
-    //   console.log('Execute save user failed');
-    // }
+    console.log('$$$ Closing all Connections');
+    await this.sqliteService.closeAllConnections();
+    console.log('$$$ New Connection');
+    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+    await db.open();
+    console.log('$$$ Inserting UUID');
+    var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
+    var values = [myid];
+    let ret:any = await db.run(sqlcmd, values);
+
+    console.log('$$$ Inserting Result ' + ret.changes.changes);
+    if (ret.changes.changes  !== 1) {
+      console.log('Execute save user failed');
+    }
 
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
@@ -83,7 +85,7 @@ export class RegisterPage implements OnInit {
         // Navigate to Tabs
         this.router.navigate(['tabs']);
       }catch(e){
-        this.notificationService.presentToast(e);
+        this.notificationService.presentToast('Login failed  , Please try again');
       }
       
     });

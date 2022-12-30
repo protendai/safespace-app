@@ -21,13 +21,12 @@ export class ProfilePage implements OnInit {
     school:'',
     email:''
   };
+
   constructor(private storageService: StorageService,private apiService:ApiService,private router:Router, private notificationService: NotificationsService) {
     this.getUser();
-   }
-
-  ngOnInit() {
-    
   }
+
+  ngOnInit() {}
 
   async getUser(){
     var data  =  await this.storageService.get('user');

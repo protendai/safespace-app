@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
             // Navigate to Tabs
             this.router.navigate(['tabs']);
           }catch(e){
-            this.notificationService.presentToast(e);
+            this.notificationService.presentToast('Login failed , Please try again');
           }
         });
       }else{
