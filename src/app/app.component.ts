@@ -10,7 +10,7 @@ import { NotificationsService } from './services/notifications.service';
 })
 export class AppComponent {
   private initPlugin: boolean | undefined;
-  constructor( private platform: Platform,private _sqlite: SqliteService, private notificataionService: NotificationsService) {
+  constructor( private platform: Platform,private _sqlite: SqliteService) {
    this.initializeApp();
   }
 
@@ -21,8 +21,6 @@ export class AppComponent {
         this.initPlugin = ret;
         console.log('>>>> in App  this.initPlugin ' + this.initPlugin);
       });
-
-      this.notificataionService.initPush();
 
     });
   }

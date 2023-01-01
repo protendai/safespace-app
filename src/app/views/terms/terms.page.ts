@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { HttpService } from 'src/app/services/http.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { SqliteService } from 'src/app/services/sqlite.service';
-import { StorageService } from 'src/app/services/storage.service';
+
 
 
 
@@ -15,9 +12,10 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class TermsPage implements OnInit {
 
-  constructor( private router: Router) { }
+  constructor( private router: Router,private notificataionService: NotificationsService) { }
 
   ngOnInit() {
+    this.notificataionService.initPush();
   }
 
   hasAccepted(){
