@@ -54,6 +54,7 @@ export class RegisterPage implements OnInit {
   async login(myid: any){
     
     this.notificationService.showLoader('Login In ...');
+    
     let data = {
         id:myid,
         fbToken: this.notificationService.getfbToken()

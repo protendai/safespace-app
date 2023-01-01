@@ -41,6 +41,10 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
 }
 
+//packagingOptions {
+//        exclude 'build-data.properties'
+//    }
+
 apply from: 'capacitor.build.gradle'
 
 try {

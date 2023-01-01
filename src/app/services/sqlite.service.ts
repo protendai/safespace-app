@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { CapacitorSQLite, SQLiteDBConnection, SQLiteConnection, capSQLiteSet,
          capSQLiteChanges, capSQLiteValues, capEchoResult, capSQLiteResult,
          capNCDatabasePathResult } from '@capacitor-community/sqlite';
-import { threadId } from 'worker_threads';
+
 
 @Injectable({
   providedIn: 'root'
