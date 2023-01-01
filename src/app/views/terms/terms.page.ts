@@ -12,10 +12,10 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 })
 export class TermsPage implements OnInit {
 
-  constructor( private router: Router,private notificataionService: NotificationsService) { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
-    this.notificataionService.initPush();
+    
   }
 
   hasAccepted(){

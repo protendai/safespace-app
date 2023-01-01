@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
-
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-login',
@@ -20,17 +20,22 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     private router:Router,
     ) { 
-      
+
+      Network.addListener('networkStatusChange', status => {
+        console.log('Network status changed', status.connected);
+      }); 
     }
 
   ngOnInit() {
-    
+   
   }
 
-  async login(){
-      this.apiService.setUserId();
-      this.userId = this.apiService.getUserId();
-      console.log('$$$ User ID ' + this.userId);
+  login(){
+
+    // return this.checkNetwork();
+    this.apiService.setUserId();
+    this.userId = this.apiService.getUserId();
+    console.log('$$$ User ID ' + this.userId);
 
     if(this.userId === null || this.userId === undefined){
       this.router.navigate(['/terms']);
@@ -57,5 +62,13 @@ export class LoginPage implements OnInit {
     }
   }
 
+  checkNetwork(){
+    async () => {
+      const status = await Network.getStatus();
+      console.log('Network status:', status);
+    };
+  }
+
+  
 
 }

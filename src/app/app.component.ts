@@ -10,18 +10,13 @@ import { NotificationsService } from './services/notifications.service';
 })
 export class AppComponent {
   // private initPlugin: boolean | undefined;
-  constructor( ) {
+  constructor(private platform: Platform, private notificataionService: NotificationsService ) {
   //  this.initializeApp();
   }
 
   initializeApp() {
-    // this.platform.ready().then(async () => {
-
-    //   this._sqlite.initializePlugin().then(ret => {
-    //     this.initPlugin = ret;
-    //     console.log('>>>> in App  this.initPlugin ' + this.initPlugin);
-    //   });
-
-    // });
+    this.platform.ready().then(async () => {
+      this.notificataionService.initPush();
+    });
   }
 }
