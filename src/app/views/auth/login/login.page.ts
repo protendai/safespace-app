@@ -4,7 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Network } from '@capacitor/network';
-
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,10 +19,14 @@ export class LoginPage implements OnInit {
     private apiService:ApiService,
     private storageService: StorageService,
     private router:Router,
+    private alertController: AlertController
     ) { 
 
       Network.addListener('networkStatusChange', status => {
         console.log('Network status changed', status.connected);
+        if(status.connected !== true){
+          this.presentAlert('Your phone is not connected to the internet');
+        }
       }); 
     }
 
@@ -32,7 +36,7 @@ export class LoginPage implements OnInit {
 
   login(){
 
-    // return this.checkNetwork();
+    this.checkNetwork();
     this.apiService.setUserId();
     this.userId = this.apiService.getUserId();
     console.log('$$$ User ID ' + this.userId);
@@ -62,13 +66,21 @@ export class LoginPage implements OnInit {
     }
   }
 
-  checkNetwork(){
-    async () => {
+  async checkNetwork(){
       const status = await Network.getStatus();
       console.log('Network status:', status);
-    };
+      if(status.connected !== true){
+        this.presentAlert('Your phone is not connected to the internet');
+      }
   }
 
-  
+  async presentAlert(infoMessage:any) {
+    const alert = await this.alertController.create({
+      header: 'Notice!',
+      message: infoMessage,
+      buttons: ['Try Again'],
+    });
 
+    await alert.present();
+  }
 }
