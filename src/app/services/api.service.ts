@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 export class ApiService {
   userData$ = new BehaviorSubject<any>('');
   quoteData$ = new BehaviorSubject<any>('');
+  id:any;
   user:any;
   quote:any;
 
@@ -41,6 +42,27 @@ export class ApiService {
     return this.httpService.post('chat',data);
   }
 
+  // Notifications
+  getNotifications(): Observable<any>{
+    return this.httpService.get('notifications');
+  }
+
+  // Payment
+  pay(data:any): Observable<any>{
+    return this.httpService.post('payment',data);
+  }
+
+  // Profile
+  getProfile(): Observable<any>{
+    return this.httpService.get('profile');
+  }
+
+  updateProfile(data:any): Observable<any>{
+    return this.httpService.post('profile',data);
+  }
+
+
+  // Storage Calls
   async setQuote(){
     var data  =  await this.storageService.get('quote');
     this.quote = JSON.parse(data);
@@ -72,22 +94,16 @@ export class ApiService {
     return this.user;
   }
 
-  // Notifications
-  getNotifications(): Observable<any>{
-    return this.httpService.get('notifications');
+
+  async setUserId(){
+    var data  =  await this.storageService.get('id');
+    this.id = JSON.parse(data);
+    console.log(this.user);
+
   }
 
-  // Payment
-  pay(data:any): Observable<any>{
-    return this.httpService.post('payment',data);
+  getUserId(){
+    return this.id;
   }
 
-  // Profile
-  getProfile(): Observable<any>{
-    return this.httpService.get('profile');
-  }
-
-  updateProfile(data:any): Observable<any>{
-    return this.httpService.post('profile',data);
-  }
 }

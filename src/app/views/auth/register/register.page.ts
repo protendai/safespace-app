@@ -22,15 +22,14 @@ export class RegisterPage implements OnInit {
     private storageService: StorageService,
     private notificationService: NotificationsService,
     private router: Router,
-    private sqliteService : SqliteService
   ) { }
 
   ngOnInit() {
   }
 
   register(){
+
     console.log(this.data);
-    // return 0;
     // return this.login('e5f25efe-319a-4644-9417-78a4bca2b01b');
     this.notificationService.showLoader('Registering ...');
     this.apiService.register(this.data).subscribe(async (v)=>{
@@ -40,17 +39,15 @@ export class RegisterPage implements OnInit {
         if(v.success){
           this.login(v.success);
           this.getQuote();
-          this.notificationService.dismissLoader();
         }
       }catch(e){
         this.notificationService.presentToast(e);
       }
-      
     });
   }
 
   async login(myid: any){
-    
+    this.storageService.store("id",myid);
     this.notificationService.showLoader('Login In ...');
     
     let data = {
@@ -58,24 +55,9 @@ export class RegisterPage implements OnInit {
         fbToken: this.notificationService.getfbToken()
     };
 
-    console.log('$$$ Closing all Connections');
-    await this.sqliteService.closeAllConnections();
-    console.log('$$$ New Connection');
-    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-    await db.open();
-    console.log('$$$ Inserting UUID');
-    var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
-    var values = [myid];
-    let ret:any = await db.run(sqlcmd, values);
-
-    console.log('$$$ Inserting Result ' + ret.changes.changes);
-    if (ret.changes.changes  !== 1) {
-      console.log('Execute save user failed');
-    }
-
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
-
+      this.notificationService.dismissLoader();
       try{
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
