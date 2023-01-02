@@ -57,15 +57,18 @@ export class RegisterPage implements OnInit {
 
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
-      this.notificationService.dismissLoader();
       try{
+        console.log(v.user.payment_status);
+        this.notificationService.dismissLoader();
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
         this.storageService.store("user",v.user);
+        this.storageService.store("payment",v.user.payment_status);
         this.apiService.setUser();
         // Navigate to Tabs
         this.router.navigate(['tabs']);
       }catch(e){
+        this.notificationService.dismissLoader();
         this.notificationService.presentToast('Login failed  , Please try again');
       }
       

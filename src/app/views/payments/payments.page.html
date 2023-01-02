@@ -23,7 +23,7 @@
       <ion-list>
         <ion-item>
           <ion-label position="stacked">Select platform to pay with</ion-label>
-          <ion-select [(ngModel)]="data.paymentMethod" name="paymentMethod" placeholder="Select Platform">
+          <ion-select [(ngModel)]="data.paymentMethod" name="paymentMethod" placeholder="Select Platform" required="required">
             <ion-select-option value="Ecocash">EcoCash</ion-select-option>
             <ion-select-option value="Onemoney">OneMoney</ion-select-option>
             <ion-select-option value="Telecash">TeleCash</ion-select-option>
@@ -31,11 +31,11 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Phone Number eg 0776630953</ion-label>
-          <ion-input [(ngModel)]="data.phone" name="phone" placeholder="Enter text"></ion-input>
+          <ion-input [(ngModel)]="data.phone" name="phone" placeholder="Enter text" required="required"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Amount (ZWL)</ion-label>
-          <ion-input [(ngModel)]="data.amount" name="amount" placeholder="Enter text" value="10.00"></ion-input>
+          <ion-input [(ngModel)]="data.amount" name="amount" placeholder="Enter text" value="10.00" readonly="readonly"></ion-input>
         </ion-item>
       </ion-list>
     </ion-card-content>

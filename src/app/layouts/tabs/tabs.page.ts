@@ -16,6 +16,7 @@ export class TabsPage implements OnInit {
   }
 
   logout(){
+    this.apiService.setUserId();
     this.apiService.logout();
     this.router.navigate(['login']);
  }

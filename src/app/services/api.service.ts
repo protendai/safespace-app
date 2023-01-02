@@ -96,9 +96,10 @@ export class ApiService {
 
 
   async setUserId(){
+    
     var data  =  await this.storageService.get('id');
     this.id = JSON.parse(data);
-    console.log(this.user);
+    console.log("LoggedIn User " + this.user);
 
   }
 

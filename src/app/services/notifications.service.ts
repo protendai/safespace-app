@@ -38,18 +38,17 @@ export class NotificationsService {
   async showLoader(infoMessage: any) {
     const loading = this.loadingCtrl.create({
       message: infoMessage,
-      duration: 3000,
       spinner: 'circles',
     });
 
     (await loading).present();
   }
 
-  dismissLoader() {
-    this.loadingCtrl.dismiss().then((response) => {
-        console.log('Loader closed!', response);
-    }).catch((err) => {
-        console.log('Error occured : ', err);
+  async dismissLoader() {
+    return this.loadingCtrl.dismiss().then((res) => {
+      console.log('Loading dismissed!', res);
+    }).catch((error) => {
+      console.log('error', error);
     });
   }
 

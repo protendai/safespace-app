@@ -63,12 +63,15 @@ export class PaymentsPage implements OnInit {
     this.apiService.pay(this.data).subscribe((v)=>{
         console.log(v);
         if(v.success){
+          this.notificationService.dismissLoader();
           this.updateProfile();
           this.notificationService.presentToast(v.success);
         }else{
+          this.notificationService.dismissLoader();
           this.notificationService.presentToast('Error' + v);
         }
     });
+    
   }
 
   updateProfile(){
@@ -77,15 +80,16 @@ export class PaymentsPage implements OnInit {
     this.apiService.getProfile().subscribe((v)=>{
         console.log(v);
         if(v.success){
+          this.notificationService.dismissLoader();
           console.log(v.success);
+          this.storageService.removeItem("user");
           this.storageService.store("user",v.success);
           this.router.navigate(['/tabs']);
         }else{
+          this.notificationService.dismissLoader();
           this.notificationService.presentToast('Error' + v);
         }
     });
-
-    this.notificationService.dismissLoader();
   }
 
 }

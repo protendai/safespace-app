@@ -21,7 +21,6 @@ export class ChatPage implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
-    this.notificationService.showLoader('Loading messages...');
     //  Get user data
     this.apiService.setUser();
     this.user = this.apiService.getUser();
@@ -32,7 +31,6 @@ export class ChatPage implements OnInit,OnDestroy {
     }, 10000);
     // disable skeletons
     this.loaded = true;
-    this.notificationService.dismissLoader();
   }
 
   goBack(){
