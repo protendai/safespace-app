@@ -74,7 +74,7 @@ export class NotificationsService {
     });
 
     PushNotifications.addListener('registration', (token) => {
-        console.log('>>>>>> FB Token '+ token.value);
+        console.log('Firebase Token Set '+ token.value);
         this.fbToken = token.value;
         
     });
@@ -89,7 +89,9 @@ export class NotificationsService {
 
   }
 
+ 
   getfbToken(){
+    console.log('Firebase Token Get '+ this.fbToken);
     return this.fbToken;
   }
 
