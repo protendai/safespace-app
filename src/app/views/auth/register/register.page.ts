@@ -22,6 +22,7 @@ export class RegisterPage implements OnInit {
     private storageService: StorageService,
     private notificationService: NotificationsService,
     private router: Router,
+    private sqliteService : SqliteService
   ) { }
 
   ngOnInit() {
@@ -37,6 +38,7 @@ export class RegisterPage implements OnInit {
       console.log(v);
       try{ 
         if(v.success){
+          this.setupDB(v.success)
           this.login(v.success);
           this.getQuote();
         }
@@ -46,7 +48,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  async login(myid: any){
+  login(myid: any){
     this.storageService.store("id",myid);
     this.notificationService.showLoader('Login In ...');
     
@@ -83,6 +85,23 @@ export class RegisterPage implements OnInit {
           this.apiService.setQuote();
         }
     });
+  }
+
+  async setupDB(myid:any){
+    console.log('$$$ Closing all Connections');
+    await this.sqliteService.closeAllConnections();
+    console.log('$$$ New Connection');
+    let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+    await db.open();
+    console.log('$$$ Inserting UUID');
+    var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
+    var values = [myid];
+    let ret:any = await db.run(sqlcmd, values);
+
+    console.log('$$$ Inserting Result ' + ret.changes.changes);
+    if (ret.changes.changes  !== 1) {
+      console.log('Execute save user failed');
+    }
   }
 
 }
