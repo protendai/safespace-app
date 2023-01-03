@@ -7,6 +7,7 @@ import { Network } from '@capacitor/network';
 import { AlertController } from '@ionic/angular';
 import { SqliteService } from 'src/app/services/sqlite.service';
 import { createSchema } from 'src/app/utils/create-schema';
+import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,7 +23,8 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     private router:Router,
     private alertController: AlertController,
-    private sqliteService: SqliteService
+    private sqliteService: SqliteService,
+    private databaseService: DatabaseService
     ) { 
 
       Network.addListener('networkStatusChange', status => {
@@ -34,13 +36,16 @@ export class LoginPage implements OnInit {
     }
 
   ngOnInit() {
-   
+    // this.setup();
   }
 
-  login(){
-
+  async login(){
+    this.databaseService.createTable();
     this.checkNetwork();
-    let userId = this.checkAuth();
+    // let userId = await this.checkAuth();
+    let userId = this.databaseService.getData();
+    
+    console.log('User ID ' + userId);
     
     if(userId === null || userId === undefined){
       this.router.navigate(['/terms']);
@@ -80,9 +85,11 @@ export class LoginPage implements OnInit {
 
     console.log('$$$ Check Database ' + res.result);
     if(res.result === true){
+      this.notificationService.dismissLoader();
       console.log('$$$ Database Exists');
       Database = true;
     }else{
+      this.notificationService.dismissLoader();
       console.log('$$$ Creating Database');
       db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
 
@@ -95,8 +102,6 @@ export class LoginPage implements OnInit {
       if (ret.changes.changes < 0) {
         console.log('$$$ Execute createSchema failed');
       }
-
-      this.notificationService.dismissLoader();
       this.router.navigate(['terms']);
     }
 
@@ -116,8 +121,7 @@ export class LoginPage implements OnInit {
   }
 
   async checkAuth(){
-    await this.setup();
-
+    
     console.log('$$$ Closing all Connections');
     await this.sqliteService.closeAllConnections();
     console.log('$$$ New Connection');

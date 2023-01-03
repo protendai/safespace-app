@@ -38,6 +38,7 @@ export class NotificationsService {
   async showLoader(infoMessage: any) {
     const loading = this.loadingCtrl.create({
       message: infoMessage,
+      duration: 10000,
       spinner: 'circles',
     });
 

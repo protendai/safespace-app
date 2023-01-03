@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { DatabaseService } from 'src/app/services/database.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SqliteService } from 'src/app/services/sqlite.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -22,7 +23,8 @@ export class RegisterPage implements OnInit {
     private storageService: StorageService,
     private notificationService: NotificationsService,
     private router: Router,
-    private sqliteService : SqliteService
+    private sqliteService : SqliteService,
+    private databaseService: DatabaseService
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,8 @@ export class RegisterPage implements OnInit {
 
   login(myid: any){
     this.storageService.store("id",myid);
+    this.databaseService.saveData(myid);
+    this.databaseService.getData();
     this.notificationService.showLoader('Login In ...');
     
     let data = {
