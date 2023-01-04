@@ -37,7 +37,7 @@ export class DatabaseService {
   }
 
   getData(){
-    this.db.executeSql('SELECT * users',[])
+    this.db.executeSql('SELECT * FROM users',[])
     .then((res:any) => console.log('>>>>>>> Executed SQL : Created Record ' + res))
     .catch((e:any) => console.log(e))
   }
