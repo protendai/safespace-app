@@ -40,7 +40,6 @@ export class LoginPage implements OnInit {
   }
 
   async login(){
-    this.databaseService.createTable();
     this.checkNetwork();
     // let userId = await this.checkAuth();
     let userId = this.databaseService.getData();
@@ -48,6 +47,7 @@ export class LoginPage implements OnInit {
     console.log('User ID ' + userId);
     
     if(userId === null || userId === undefined){
+      this.databaseService.createTable();
       this.router.navigate(['/terms']);
     }else{
       
