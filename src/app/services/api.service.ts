@@ -66,7 +66,7 @@ export class ApiService {
   async setQuote(){
     var data  =  await this.storageService.get('quote');
     this.quote = JSON.parse(data);
-    console.log(this.quote);
+    // console.log(this.quote);
   }
 
   getQuotes(){
@@ -94,7 +94,7 @@ export class ApiService {
     
     var data  =  await this.storageService.get('id');
     this.id = JSON.parse(data);
-    console.log("LoggedIn User " + this.user);
+    // console.log("LoggedIn User " + this.user);
 
   }
 

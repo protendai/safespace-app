@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { DatabaseService } from 'src/app/services/database.service';
 import { HttpService } from 'src/app/services/http.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -49,12 +50,14 @@ export class HomePage implements OnInit {
     private apiService: ApiService,
     private storageService: StorageService,
     private router: Router,
+    private databaseService:DatabaseService
     ) { 
     }
 
   ngOnInit() {
     this.httpService.getAuthKey();
     this.quote = this.apiService.getQuotes();
+    this.databaseService.getData();
   }
 
   learnMore(item: any){

@@ -16,7 +16,7 @@ export class DatabaseService {
     console.log('>>>>>>> Creating and opening Database')
     this.sqlite.create({ name: 'data.db', location: 'default'}).then((db: SQLiteObject) => {
       this.db = db;
-      this.createTable();
+      // this.createTable();
       this.notificationsService.dismissLoader();
       console.log('>>>>>>> Database :' +db);
     }).catch(e => console.log(e));
@@ -37,9 +37,15 @@ export class DatabaseService {
   }
 
   getData(){
-    this.db.executeSql('SELECT * FROM users',[])
-    .then((res:any) => console.log('>>>>>>> Executed SQL : Created Record ' + res))
-    .catch((e:any) => console.log(e))
+    this.db.executeSql('SELECT user_id FROM users')
+    .then((res:any) => {
+      console.log('>>>>>>> Executed SQL : User data ' + res.rows.item(0).user_id)
+      return res.rows.item(0).user_id;
+    })
+    .catch((e:any) => {
+      console.log(e);
+      return undefined;
+    })
   }
 
 }

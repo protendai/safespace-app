@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
     ) { 
 
       Network.addListener('networkStatusChange', status => {
-        console.log('Network status changed', status.connected);
+        // console.log('Network status changed', status.connected);
         if(status.connected !== true){
           this.presentAlert('Your phone is not connected to the internet');
         }
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
     console.log('User ID ' + userId);
     
     if(userId === null || userId === undefined){
-      this.databaseService.createTable();
+      
       this.router.navigate(['/terms']);
     }else{
       

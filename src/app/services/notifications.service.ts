@@ -47,16 +47,16 @@ export class NotificationsService {
 
   async dismissLoader() {
     return this.loadingCtrl.dismiss().then((res) => {
-      console.log('Loading dismissed!', res);
+      // console.log('Loading dismissed!', res);
     }).catch((error) => {
-      console.log('error', error);
+      // console.log('error', error);
     });
   }
 
   // Firebase and Push Notifications
   initPush() {
     if (Capacitor.getPlatform() !== 'web') {
-      console.log('>>>>>>> Fb setup');
+      // console.log('>>>>>>> Fb setup');
       this.registerPush();
     }
   }
@@ -65,17 +65,17 @@ export class NotificationsService {
     PushNotifications.requestPermissions().then(permission => {
         if (permission.receive === 'granted') {
             PushNotifications.register();
-            console.log('Permission Granted');
+            // console.log('Permission Granted');
         }
         else {
             // If permission is not granted
-            console.log('Permission not granted');
-            console.log('Permission Not Granted');
+            // console.log('Permission not granted');
+            // console.log('Permission Not Granted');
         }
     });
 
     PushNotifications.addListener('registration', (token) => {
-        console.log('Firebase Token Set '+ token.value);
+        // console.log('Firebase Token Set '+ token.value);
         this.fbToken = token.value;
         
     });
@@ -92,7 +92,7 @@ export class NotificationsService {
 
  
   getfbToken(){
-    console.log('Firebase Token Get '+ this.fbToken);
+    // console.log('Firebase Token Get '+ this.fbToken);
     return this.fbToken;
   }
 

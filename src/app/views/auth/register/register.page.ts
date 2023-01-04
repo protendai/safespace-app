@@ -40,7 +40,7 @@ export class RegisterPage implements OnInit {
       console.log(v);
       try{ 
         if(v.success){
-          this.setupDB(v.success)
+          // this.setupDB(v.success)
           this.login(v.success);
           this.getQuote();
         }
@@ -53,7 +53,6 @@ export class RegisterPage implements OnInit {
   login(myid: any){
     this.storageService.store("id",myid);
     this.databaseService.saveData(myid);
-    this.databaseService.getData();
     this.notificationService.showLoader('Login In ...');
     
     let data = {
@@ -64,7 +63,7 @@ export class RegisterPage implements OnInit {
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
       try{
-        console.log(v.user.payment_status);
+       
         this.notificationService.dismissLoader();
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
