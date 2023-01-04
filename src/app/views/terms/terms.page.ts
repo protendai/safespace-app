@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
-
-
-
 
 @Component({
   selector: 'app-terms',

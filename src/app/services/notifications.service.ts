@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
-import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class NotificationsService {
 
   fbToken:any;
 
-  constructor(private router: Router, private toastController: ToastController,private loadingCtrl: LoadingController,private alertController: AlertController) { }
+  constructor(private toastController: ToastController,private loadingCtrl: LoadingController,private alertController: AlertController) { }
 
   //  Basic Notifications
 

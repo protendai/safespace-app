@@ -11,18 +11,18 @@ export class DatabaseService {
 
   constructor(private sqlite: SQLite,private notificationsService: NotificationsService) { }
 
-  initDb(){
+  async initDb(){
+
     this.notificationsService.showLoader('Setting up Database');
     console.log('>>>>>>> Creating and opening Database')
     this.sqlite.create({ name: 'data.db', location: 'default'}).then((db: SQLiteObject) => {
       this.db = db;
-      // this.createTable();
+      this.createTable();
       this.notificationsService.dismissLoader();
-      console.log('>>>>>>> Database :' +db);
     }).catch(e => console.log(e));
   }
 
-  createTable(){
+  async createTable(){
     this.db.executeSql('create table users (user_id VARCHAR(255))', [])
     .then(() => console.log('>>>>>>> Executed SQL : Created Table'))
     .catch((e: any) => console.log(e));
@@ -30,17 +30,20 @@ export class DatabaseService {
     return true;
   }
 
-  saveData(user_id:any){
+  async saveData(user_id:any){
     this.db.executeSql('INSERT INTO users (user_id) VALUES (?)',[user_id])
-    .then((res:any) => console.log('>>>>>>> Executed SQL : Created Record ' + res))
+    .then((res:any) => {
+      console.log('>>>>>>> Executed SQL : Created Record ' + res)
+    })
     .catch((e:any) => console.log(e))
   }
 
   getData(){
-    this.db.executeSql('SELECT user_id FROM users')
+    console.log('>>>>>>> Executed SQL : Get Data')
+    this.db.executeSql('SELECT count(*) As total FROM users',[])
     .then((res:any) => {
-      console.log('>>>>>>> Executed SQL : User data ' + res.rows.item(0).user_id)
-      return res.rows.item(0).user_id;
+      this.notificationsService.presentToast(JSON.stringify(res));
+      console.log('>>>>>>> Executed SQL : User data Value ' + res)
     })
     .catch((e:any) => {
       console.log(e);

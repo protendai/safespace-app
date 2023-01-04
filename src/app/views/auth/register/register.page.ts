@@ -53,6 +53,7 @@ export class RegisterPage implements OnInit {
   login(myid: any){
     this.storageService.store("id",myid);
     this.databaseService.saveData(myid);
+    this.databaseService.getData();
     this.notificationService.showLoader('Login In ...');
     
     let data = {
@@ -71,6 +72,7 @@ export class RegisterPage implements OnInit {
         this.storageService.store("payment",v.user.payment_status);
         this.apiService.setUser();
         // Navigate to Tabs
+       
         this.router.navigate(['tabs']);
       }catch(e){
         this.notificationService.dismissLoader();

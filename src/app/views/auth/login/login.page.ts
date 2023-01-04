@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     }
 
   ngOnInit() {
-    // this.setup();
+   
   }
 
   async login(){
