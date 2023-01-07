@@ -28,8 +28,6 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     private router:Router,
     private alertController: AlertController,
-    private sqliteService: SqliteService,
-    private databaseService: DatabaseService
     ) { 
 
       Network.addListener('networkStatusChange', status => {
