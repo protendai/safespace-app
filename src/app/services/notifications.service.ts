@@ -81,11 +81,11 @@ export class NotificationsService {
     });
 
     PushNotifications.addListener('registrationError', (err)=> {
-        console.log(err);
+        // console.log(err);
     }); 
 
     PushNotifications.addListener('pushNotificationReceived', (notifications) => {
-        console.log(notifications);
+        // console.log(notifications);
     });
 
   }

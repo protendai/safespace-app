@@ -13,17 +13,20 @@ export class AppComponent {
 
   private initPlugin: boolean | undefined;
 
-  constructor(private platform: Platform,private notificataionService: NotificationsService,private database: DatabaseService) {
+  constructor(
+    private platform: Platform,
+    private notificataionService: NotificationsService,
+    private database: DatabaseService,
+    private sqlite: SqliteService
+    ) {
    this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(async () => {
-
-      // this._sqlite.initializePlugin().then(ret => { this.initPlugin = ret; console.log('>>>> in App  this.initPlugin ' + this.initPlugin); });
+      this.sqlite.initializePlugin().then(ret => { this.initPlugin = ret; console.log('>>>> in App  this.initPlugin ' + this.initPlugin); });
       this.notificataionService.initPush();
-      this.database.initDb();
-
+      // this.database.initDb();
     });
   }
 }

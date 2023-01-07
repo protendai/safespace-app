@@ -61,6 +61,10 @@ export class ApiService {
     return this.httpService.post('profile',data);
   }
 
+  updatePassword(data:any): Observable<any>{
+    return this.httpService.post('profile/password',data);
+  }
+
 
   // Storage Calls
   async setQuote(){

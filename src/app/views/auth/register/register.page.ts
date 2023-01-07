@@ -15,7 +15,9 @@ export class RegisterPage implements OnInit {
 
   public data = {
     dob:'',
-    school:''
+    school:'',
+    username:'',
+    password:'',
   };
 
   constructor(
@@ -40,7 +42,6 @@ export class RegisterPage implements OnInit {
       console.log(v);
       try{ 
         if(v.success){
-          // this.setupDB(v.success)
           this.login(v.success);
           this.getQuote();
         }
@@ -50,14 +51,15 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  login(myid: any){
-    this.storageService.store("id",myid);
-    this.databaseService.saveData(myid);
+  login(user:any){
+    this.storageService.store("id",user.uuid);
+    this.databaseService.saveData(user);
     this.databaseService.getData();
     this.notificationService.showLoader('Login In ...');
     
     let data = {
-        id:myid,
+        username:user.username,
+        password:this.data.password,
         fbToken: this.notificationService.getfbToken()
     };
 

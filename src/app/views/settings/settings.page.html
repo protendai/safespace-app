@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="primary">
+      <ion-button (click) = "goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Password Update</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-paddidng">
+  <div class="profile ion-text-center">
+    <img src="../../../assets/images/profile.png" alt="" style="max-width: 180px;">
+  </div>
+  <div class="input-fields">
+  
+    <ion-item>
+      <ion-label position="stacked">Current Password</ion-label>
+      <ion-input type="password" name="currentPassword" [(ngModel)]="data.currentPassword" placeholder="Current Password"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">New Password</ion-label>
+      <ion-input type="password" name="newPassword" [(ngModel)]="data.newPassword" placeholder="New Password"></ion-input>
+    </ion-item>
+
+  </div>
+  <div class="ion-text-center">
+    <ion-button shape="rounded" fill="solid" color="primary" (click)="updatePassword()">Update Password</ion-button>
+  </div>
+</ion-content>

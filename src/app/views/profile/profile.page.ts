@@ -14,6 +14,7 @@ export class ProfilePage implements OnInit {
   user:any;
 
   data = {
+    username:'',
     name:'',
     surname:'',
     phone:'',
@@ -31,6 +32,7 @@ export class ProfilePage implements OnInit {
   async getUser(){
     var data  =  await this.storageService.get('user');
     this.user = JSON.parse(data);
+    this.data.username    = this.user.username;
     this.data.name    = this.user.name;
     this.data.surname = this.user.surname;
     this.data.phone   = this.user.phone;

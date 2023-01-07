@@ -3,7 +3,7 @@
 
   <div class="top-div">
     <div class="ion-text-center" style="margin-bottom:80px;">
-      <img src="../../../assets/images/logo.jpg" style="max-width:260px;padding-top: 80px;">
+      <img src="../../../assets/images/logo.jpg" style="max-width:200px;padding-top: 80px;">
     </div>
   </div>
 
@@ -12,25 +12,29 @@
   <div class="bottom-div">
 
     <div class="p-top">
-      <p class="ion-text-center">
-       One last step !
-      </p>
+      <p class="ion-text-center"> Create Account </p>
     </div>
     
     <form>
-      <h6 class="pro-label"> Enter your Birthday</h6>
+      <ion-item color="light">
+        <ion-input placeholder="Enter a username" name="username" inputmode="text" [(ngModel)]="data.username" maxlength="30"></ion-input>
+      </ion-item>
+
       <ion-item color="light">
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
-
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
             <ion-datetime id="datetime" presentation="date" name="dob" [(ngModel)]="data.dob"></ion-datetime>
           </ng-template>
         </ion-modal>
       </ion-item>
-      <h6 class="pro-label"> Enter your School Name </h6>
+
       <ion-item color="light">
         <ion-input type="text" name="school" [(ngModel)]="data.school" placeholder="Enter your school name"></ion-input>
+      </ion-item>
+
+      <ion-item color="light">
+        <ion-input type="password" name="password" [(ngModel)]="data.password" placeholder="Enter Password"></ion-input>
       </ion-item>
 
       <div class="ion-text-center pro-btn">
@@ -45,6 +49,6 @@
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar class="ion-text-center">
-    <p style="color:#fff">Safespace V1.0.0</p>
+    <p style="color:#fff">Safespace V1.0.3</p>
   </ion-toolbar>
 </ion-footer>

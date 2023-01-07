@@ -3,7 +3,7 @@
 
   <div class="top-div">
     <div class="ion-text-center" style="margin-bottom:80px;">
-      <img src="../../../assets/images/logo.jpg" style="max-width:260px;padding-top: 80px;">
+      <img src="../../../assets/images/logo.jpg" style="max-width:200px;padding-top: 80px;">
     </div>
   </div>
 
@@ -18,11 +18,19 @@
     </div>
     
     <form>
-      
+      <ion-item color="light">
+        <ion-input placeholder="Enter a desired username which can be a nickname" name="username" inputmode="text" [(ngModel)]="data.username" maxlength="30"></ion-input>
+      </ion-item>
   
+      <ion-item color="light">
+        <ion-input type="password" name="password" [(ngModel)]="data.password" placeholder="Enter Password"></ion-input>
+      </ion-item>
+
+      <p style="color:#fff">Dont have an account yet ?  <span style="color:yellow" routerLink="/terms">Click here to register</span></p>
       <div class="ion-text-center pro-btn">
         <ion-button shape="round" size="medium" fill="solid" color="secondary" (click)="login()">Get Started</ion-button>
       </div>
+
     </form>
     
   </div>
@@ -32,6 +40,6 @@
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar class="ion-text-center">
-    <p style="color:#fff">Safespace V1.0.1</p>
+    <p style="color:#fff">Safespace V1.0.3</p>
   </ion-toolbar>
 </ion-footer>
