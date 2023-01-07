@@ -17,7 +17,10 @@ export class ChatPage implements OnInit,OnDestroy {
   user:any;
   t: any;
   constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
-    
+    //  Start timer
+    this.t = setInterval(() => {
+      this.getMessages();
+    }, 10000);
   }
 
   ngOnInit() {
@@ -25,10 +28,6 @@ export class ChatPage implements OnInit,OnDestroy {
     this.apiService.setUser();
     this.user = this.apiService.getUser();
     console.log(this.apiService.user);
-    //  Start timer
-    this.t = setInterval(() => {
-      this.getMessages();
-    }, 10000);
     // disable skeletons
     this.loaded = true;
   }

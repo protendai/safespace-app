@@ -10,7 +10,8 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="chat"  *ngIf="!loaded">
+
+  <div class="chat"  *ngIf="loaded">
     <div *ngFor="let item of messages" class="message {{item.sender_id === userId ? 'message-left' : 'message-right'}}">
       <div class="{{item.sender_id === userId ? '' : 'ion-text-right'}}">
         <ion-chip>
