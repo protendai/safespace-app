@@ -65,7 +65,7 @@ export class DatabaseService {
     await db.open();
     console.log('>>> Get user Data');
   
-    let ret:any = await this.db.query('SELECT * FROM users;');
+    let ret:any = await db.query('SELECT * FROM users;');
 
     console.log(">>> User Data : " + ret.values[0].user_id);
 
