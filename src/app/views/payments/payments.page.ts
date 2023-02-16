@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-payments',
@@ -72,6 +73,14 @@ export class PaymentsPage implements OnInit {
         }
     });
     
+  }
+
+  async makeRTGSPayment(){
+    await Browser.open({ url: 'http://localhost:8000/payments/pay/057ea082-1564-4ccd-8571-eb949056a7ff/ZWL' });
+  }
+
+  async makeUSDPayment(){
+    await Browser.open({ url: 'http://localhost:8000/payments/pay/057ea082-1564-4ccd-8571-eb949056a7ff/USD' });
   }
 
   updateProfile(){

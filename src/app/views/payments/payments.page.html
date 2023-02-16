@@ -13,33 +13,20 @@
 <form action="">
   <div class="header">
     <p class="ion-text-center">
-      NOTICE!<br/>
-      Our Platform currency supports payments via Paynow. This means you can use the following mobile money transfers<br/>
-      OneMoney,EcoCash,TeleCash
+      Subscription Payments<br/>
+      Please choose your preferred payment method
     </p>
   </div>
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label position="stacked">Select platform to pay with</ion-label>
-          <ion-select [(ngModel)]="data.paymentMethod" name="paymentMethod" placeholder="Select Platform" required="required">
-            <ion-select-option value="Ecocash">EcoCash</ion-select-option>
-            <ion-select-option value="Onemoney">OneMoney</ion-select-option>
-            <ion-select-option value="Telecash">TeleCash</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Phone Number eg 0776630953</ion-label>
-          <ion-input [(ngModel)]="data.phone" name="phone" placeholder="Enter text" required="required"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Amount (ZWL)</ion-label>
-          <ion-input [(ngModel)]="data.amount" name="amount" placeholder="Enter text" value="10.00" readonly="readonly"></ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-    <ion-button expand="block" fill="outline" (click)="makePayment()">Make Payment</ion-button>
-  </ion-card>
 </form>
+
+<ion-card (click)="makeUSDPayment()">
+  <div class="label">Card Payments</div>
+  <img alt="Image" src="../../../assets/images/visa_mastercard.jpg" />
+</ion-card>
+
+<ion-card (click)="makeRTGSPayment()">
+  <div class="label">Mobile Money</div>
+  <img alt="Image" src="../../../assets/images/mobile_money.jpg" />
+</ion-card>
+
 </ion-content>

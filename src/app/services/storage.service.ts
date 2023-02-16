@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { createSchema } from '../utils/create-schema';
 import { SqliteService } from './sqlite.service';
 
@@ -9,6 +10,8 @@ import { SqliteService } from './sqlite.service';
 export class StorageService {
 
   private item = [];
+  hasPaid = new BehaviorSubject<number>(0);
+  
   constructor(private sqliteService: SqliteService) { }
 
   async store(storageKey: string, val: any){
@@ -121,4 +124,8 @@ export class StorageService {
   // Get Set
   setItem(item: never[]){this.item = item;}
   getItem(){ return this.item;}
+  // Payment
+  setPayment(data:number){ this.hasPaid.next(data); }
+  getPayment(): Observable<number> { console.log(this.hasPaid); return this.hasPaid; }
+  
 }

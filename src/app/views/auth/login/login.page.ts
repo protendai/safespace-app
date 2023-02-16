@@ -56,6 +56,7 @@ export class LoginPage implements OnInit {
           this.storageService.store("token",v.access_token);
           this.storageService.store("user",v.user);
           this.storageService.store("payment",v.user.payment_status);
+          this.storageService.setPayment(v.user.payment_status);
           this.storageService.saveToDb(v.access_token);
           // Navigate to Tabs
           this.router.navigate(['tabs']);

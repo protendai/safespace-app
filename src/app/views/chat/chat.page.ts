@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class ChatPage implements OnInit,OnDestroy {
   messages:any;
   user:any;
   t: any;
-  constructor(private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
+  constructor(private storageService:StorageService,private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { 
+    // Check Payment
+    this.checkPayment();
     //  Start timer
     this.t = setInterval(() => {
       this.getMessages();
@@ -37,7 +40,15 @@ export class ChatPage implements OnInit,OnDestroy {
   }
 
 
-
+  async checkPayment(){
+    this.storageService.getPayment().subscribe((payment) => {
+      console.log(payment);
+      if(payment != 1){
+        this.router.navigate(['/payments']);
+      }
+    });
+    
+  }
   async getMessages(){
     this.apiService.getMessages().subscribe(async (v)=>{
       try{
