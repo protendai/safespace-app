@@ -19,7 +19,13 @@ export class PaymentsPage implements OnInit {
     paymentMethod:'',
     paymentGateway:'Paynow'
   };
-  constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService) { }
+
+  id:any
+  constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService) {
+    this.storageService.get('uuid').then((val) => {
+      this.id = val;
+    });
+  }
 
   ngOnInit() {
     this.presentAlert()
@@ -76,11 +82,30 @@ export class PaymentsPage implements OnInit {
   }
 
   async makeRTGSPayment(){
-    await Browser.open({ url: 'http://localhost:8000/payments/pay/057ea082-1564-4ccd-8571-eb949056a7ff/ZWL' });
+
+    this.storageService.get('uuid').then((val) => {
+      this.id = val.replace(/"/g,"");
+      console.log(this.id);
+    });
+
+    if(this.id === undefined || this.id === ''){
+      this.notificationService.presentToast('Failed to initiate payment. Please try again');
+    }
+
+    await Browser.open({ url: 'http://localhost:8000/payments/pay/'+this.id+'/ZWL' });
   }
 
   async makeUSDPayment(){
-    await Browser.open({ url: 'http://localhost:8000/payments/pay/057ea082-1564-4ccd-8571-eb949056a7ff/USD' });
+    this.storageService.get('uuid').then((val) => {
+      this.id = val.replace(/"/g,"");
+      console.log(this.id);
+    });
+
+    if(this.id === undefined || this.id === ''){
+      this.notificationService.presentToast('Failed to initiate payment. Please try again');
+    }
+
+    await Browser.open({ url: 'http://localhost:8000/payments/pay/'+this.id+'/USD' });
   }
 
   updateProfile(){

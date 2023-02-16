@@ -51,10 +51,12 @@ export class LoginPage implements OnInit {
       // Login using ID
       this.apiService.login(this.data).subscribe(async (v)=>{
         try{
+          console.log(v.user);
           this.notificationService.dismissLoader();
           // Save Token and User Data
           this.storageService.store("token",v.access_token);
           this.storageService.store("user",v.user);
+          this.storageService.store("uuid",v.user.uuid);
           this.storageService.store("payment",v.user.payment_status);
           this.storageService.setPayment(v.user.payment_status);
           this.storageService.saveToDb(v.access_token);
