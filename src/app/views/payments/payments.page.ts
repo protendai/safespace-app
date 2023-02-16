@@ -92,7 +92,7 @@ export class PaymentsPage implements OnInit {
       this.notificationService.presentToast('Failed to initiate payment. Please try again');
     }
 
-    await Browser.open({ url: 'http://localhost:8000/payments/pay/'+this.id+'/ZWL' });
+    await Browser.open({ url: 'https://safespace.stapps.co.za/payments/pay/'+this.id+'/ZWL' });
   }
 
   async makeUSDPayment(){
@@ -105,7 +105,7 @@ export class PaymentsPage implements OnInit {
       this.notificationService.presentToast('Failed to initiate payment. Please try again');
     }
 
-    await Browser.open({ url: 'http://localhost:8000/payments/pay/'+this.id+'/USD' });
+    await Browser.open({ url: 'https://safespace.stapps.co.za/payments/pay/'+this.id+'/USD' });
   }
 
   updateProfile(){
