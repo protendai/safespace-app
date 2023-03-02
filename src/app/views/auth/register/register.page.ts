@@ -75,8 +75,7 @@ export class RegisterPage implements OnInit {
         this.storageService.setPayment(v.user.payment_status);
         this.apiService.setUser();
         // Navigate to Tabs
-       
-        this.router.navigate(['tabs']);
+        this.router.navigate(['/welcome/' + 0]);
       }catch(e){
         this.notificationService.dismissLoader();
         this.notificationService.presentToast('Login failed  , Please try again');

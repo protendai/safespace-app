@@ -60,8 +60,8 @@ export class LoginPage implements OnInit {
           this.storageService.store("payment",v.user.payment_status);
           this.storageService.setPayment(v.user.payment_status);
           this.storageService.saveToDb(v.access_token);
-          // Navigate to Tabs
-          this.router.navigate(['tabs']);
+          // Navigate to Welcome Page
+          this.router.navigate(['/welcome/' + 1]);
         }catch(e){
           this.notificationService.dismissLoader();
           this.notificationService.presentToast('Login failed , Please try again');

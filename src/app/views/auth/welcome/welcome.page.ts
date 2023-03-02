@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
@@ -8,9 +8,18 @@ import { Router } from '@angular/router';
 })
 export class WelcomePage implements OnInit {
 
-  constructor(private router:Router) { }
+  status: any;
+
+  constructor(private router:Router,private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      if (!paramMap.has('status')) {
+        this.router.navigate(['/']);
+      }
+      this.status = paramMap.get('status');
+      console.log(this.status);
+    });
   }
 
   gotToHome(){
