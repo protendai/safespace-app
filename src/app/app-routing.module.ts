@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./views/settings/settings.module').then( m => m.SettingsPageModule)
   },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./views/auth/welcome/welcome.module').then( m => m.WelcomePageModule)
+  },
 
 ];
 
