@@ -34,21 +34,30 @@ export class RegisterPage implements OnInit {
 
   register(){
 
-    console.log(this.data);
-    // return this.login('e5f25efe-319a-4644-9417-78a4bca2b01b');
-    this.notificationService.showLoader('Registering ...');
-    this.apiService.register(this.data).subscribe(async (v)=>{
-      this.notificationService.dismissLoader();
-      console.log(v);
-      try{ 
-        if(v.success){
-          this.login(v.success);
-          this.getQuote();
-        }
-      }catch(e){
-        this.notificationService.presentToast(e);
-      }
-    });
+    if(this.data.username === "" || this.data.password === "" || this.data.dob === "" || this.data.school === ""){
+      this.notificationService.presentAlert("Registration failed","Please fill in all required fields");
+    }else{
+      console.log(this.data);
+      // return this.login('e5f25efe-319a-4644-9417-78a4bca2b01b');
+      this.notificationService.showLoader('Registering ...');
+      this.apiService.register(this.data).subscribe(async (v)=>{
+        this.notificationService.dismissLoader();
+        console.log(v);
+ 
+          if(v.success){
+            this.login(v.success);
+            this.getQuote();
+          }
+        
+      },(error) => {
+        console.log(error.error);
+        this.notificationService.dismissLoader();
+        this.notificationService.presentAlert("Registration failed","Please try again");
+      });
+  
+    }
+
+    
   }
 
   login(user:any){
@@ -63,6 +72,7 @@ export class RegisterPage implements OnInit {
         fbToken: this.notificationService.getfbToken()
     };
 
+  
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
       try{

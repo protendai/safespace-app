@@ -46,27 +46,37 @@ export class LoginPage implements OnInit {
   }
 
   async login(){
-      console.log(this.data);
+    if(this.data.username === "" || this.data.password === ""){
+      return this.notificationService.presentAlert("Login failed","Please provide both username and password");
+    }else{
       this.notificationService.showLoader('Login In ...');
       // Login using ID
       this.apiService.login(this.data).subscribe(async (v)=>{
-        try{
-          console.log(v.user);
-          this.notificationService.dismissLoader();
-          // Save Token and User Data
-          this.storageService.store("token",v.access_token);
-          this.storageService.store("user",v.user);
-          this.storageService.store("uuid",v.user.uuid);
-          this.storageService.store("payment",v.user.payment_status);
-          this.storageService.setPayment(v.user.payment_status);
-          this.storageService.saveToDb(v.access_token);
-          // Navigate to Welcome Page
-          this.router.navigate(['/welcome/' + 1]);
-        }catch(e){
-          this.notificationService.dismissLoader();
-          this.notificationService.presentToast('Login failed , Please try again');
-        }
+          if(v.error){
+            console.log(v.error);
+            this.notificationService.dismissLoader();
+            this.notificationService.presentToast('Login failed , Please check your logins and try again');
+          }else{
+            console.log(v.user);
+            this.notificationService.dismissLoader();
+            // Save Token and User Data
+            this.storageService.store("token",v.access_token);
+            this.storageService.store("user",v.user);
+            this.storageService.store("uuid",v.user.uuid);
+            this.storageService.store("payment",v.user.payment_status);
+            this.storageService.setPayment(v.user.payment_status);
+            this.storageService.saveToDb(v.access_token);
+            // Navigate to Welcome Page
+            this.router.navigate(['/welcome/' + 1]);
+          }
+      },
+      (error) => {
+        console.log(error.error);
+        this.notificationService.dismissLoader();
+        this.notificationService.presentAlert("Login failed","Please check your logins and try again");
       });
+    }
+    
   }
 
   async checkNetwork(){
