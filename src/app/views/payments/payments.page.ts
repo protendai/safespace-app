@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -21,14 +22,51 @@ export class PaymentsPage implements OnInit {
   };
 
   id:any
-  constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService) {
+  constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService,private actionSheetCtrl: ActionSheetController) {
     this.storageService.get('uuid').then((val) => {
       this.id = val;
     });
   }
 
   ngOnInit() {
-    this.presentAlert()
+    // this.presentAlert()
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Make Payment',
+      subHeader: 'Select your desired payment method',
+      buttons: [
+        {
+          text: 'Visa/Mastercard',
+          handler: () => {
+            this.makeUSDPayment();
+          },
+        },
+        {
+          text: 'RTGS Payments',
+          handler: () => {
+            this.makeRTGSPayment();
+          },
+        },
+        {
+          text: 'Upload proof of payment',
+          handler: () => {
+            this.router.navigate(['/payments-pop']);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          data: {
+            action: 'cancel',
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
   }
 
   async presentAlert() {

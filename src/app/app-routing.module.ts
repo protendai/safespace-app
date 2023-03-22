@@ -54,7 +54,11 @@ const routes: Routes = [
   {
     path: 'welcome/:status',
     loadChildren: () => import('./views/auth/welcome/welcome.module').then( m => m.WelcomePageModule)
+  },  {
+    path: 'payments-pop',
+    loadChildren: () => import('./views/payments-pop/payments-pop.module').then( m => m.PaymentsPopPageModule)
   },
+
 
 ];
 

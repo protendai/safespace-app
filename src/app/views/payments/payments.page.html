@@ -10,16 +10,37 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-<form action="">
   <div class="header">
     <p class="ion-text-center">
       Subscription Payments<br/>
-      Please choose your preferred payment method
+      Please choose your preferred payment method.
     </p>
   </div>
-</form>
 
-<ion-card (click)="makeUSDPayment()">
+
+  <div class="body">
+    <h4><u>Please Note</u></h4>
+  
+      For manual payments use the following details.
+      <hr>
+
+      <h5><u>Ecocash USD</u></h5>
+
+      Please use the folling merchant code: <b>025980</b>
+
+      <hr/>
+
+      <h5><u>InnBucks USD</u></h5>
+
+      Please send to <br/><b>Rutendo Mugadza 0773238568</b>
+
+      <hr/>
+      
+  </div>
+  <br/>
+  <ion-button (click)="presentActionSheet()" fill="outline" expand="block">Select Payment Method</ion-button>
+  <br/>
+<!-- <ion-card (click)="makeUSDPayment()">
   <div class="label">Card Payments</div>
   <img alt="Image" src="../../../assets/images/visa_mastercard.jpg" />
 </ion-card>
@@ -27,6 +48,6 @@
 <ion-card (click)="makeRTGSPayment()">
   <div class="label">Mobile Money</div>
   <img alt="Image" src="../../../assets/images/mobile_money.jpg" />
-</ion-card>
+</ion-card> -->
 
 </ion-content>
