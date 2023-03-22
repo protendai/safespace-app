@@ -9,6 +9,38 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <div class="header">
+    <p class="ion-text-center">
+      Manual Payment<br/>
+      Please fill in the form below.
+    </p>
+  </div>
+  <br/>
+  <form>
 
+    <ion-item>
+      <ion-select [(ngModel)]="data.type" name="type" placeholder="Select payment method">
+        <ion-select-option value="Innbucks">Innbucks</ion-select-option>
+        <ion-select-option value="Ecocash">Ecocash USD</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Enter sender names" name="names" inputmode="text" [(ngModel)]="data.names" maxlength="30"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Enter sender phone number" name="phone" inputmode="text" [(ngModel)]="data.phone" maxlength="30"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea name="pop" inputmode="text" [(ngModel)]="data.pop" placeholder="Paste the verfication code or confirmation message here" class="input"></ion-textarea>
+    </ion-item>
+
+    <br>
+    <div class="ion-text-center pro-btn">
+      <ion-button shape="round" size="medium" fill="solid" color="primary" (click)="upload()">Upload Proof of Payment</ion-button>
+    </div>
+  </form>
 </ion-content>
