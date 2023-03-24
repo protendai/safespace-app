@@ -58,6 +58,10 @@ const routes: Routes = [
     path: 'payments-pop',
     loadChildren: () => import('./views/payments-pop/payments-pop.module').then( m => m.PaymentsPopPageModule)
   },
+  {
+    path: 'help',
+    loadChildren: () => import('./views/help/help.module').then( m => m.HelpPageModule)
+  },
 
 
 ];

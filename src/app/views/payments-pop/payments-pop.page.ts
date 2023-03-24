@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
@@ -23,13 +24,30 @@ export class PaymentsPopPage implements OnInit {
   constructor(
     private router:Router,
     private apiService: ApiService,
-    private storageService: StorageService,
+    private alertController: AlertController,
     private notificationService: NotificationsService,
-    private sqliteService : SqliteService,
-    private databaseService: DatabaseService
+
     ) { }
 
   ngOnInit() {
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Success!',
+      message: 'Your proof of payment has been submitted.You will be notified once it has been accepted',
+      buttons: [
+        {
+          text: 'Proceed',
+          role: 'confirm',
+          handler: () => {
+            this.router.navigate(['/tabs']);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   goBack(){
@@ -40,27 +58,27 @@ export class PaymentsPopPage implements OnInit {
  
      console.log(this.data);
 
-      // if(this.data.names === "" || this.data.pop === "" || this.data.phone === ""){
-      //   this.notificationService.presentAlert("Registration failed","Please fill in all required fields");
-      // }else{
-      //   console.log(this.data);
-       
-      //   this.notificationService.showLoader('Registering ...');
-      //   this.apiService.register(this.data).subscribe(async (v)=>{
-      //     this.notificationService.dismissLoader();
-      //     console.log(v);
+      if(this.data.names === "" || this.data.pop === "" || this.data.phone === ""){
+        this.notificationService.presentAlert("Warning","Please fill in all required fields");
+      }else{
+        
+        this.notificationService.showLoader('Loading...');
+        this.apiService.manualPay(this.data).subscribe(async (v)=>{
+          this.notificationService.dismissLoader();
+          console.log(v);
    
-      //       if(v.success){
-      //         console.log(v.success);
-      //       }
+            if(v.success){
+              console.log(v.success);
+              this.presentAlert();
+            }
           
-      //   },(error) => {
-      //     console.log(error.error);
-      //     this.notificationService.dismissLoader();
-      //     this.notificationService.presentAlert("Registration failed","Please try again");
-      //   });
+        },(error) => {
+          console.log(error.error);
+          this.notificationService.dismissLoader();
+          this.notificationService.presentAlert("Operation failed","Please try again");
+        });
     
-      // }
+      }
 
   }
 

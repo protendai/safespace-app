@@ -95,4 +95,8 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
+
+  help(){
+    this.router.navigate(['/help']);
+  }
 }

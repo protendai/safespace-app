@@ -14,6 +14,8 @@ import { Browser } from '@capacitor/browser';
 })
 export class PaymentsPage implements OnInit {
 
+  id:any
+
   data = {
     phone:'',
     amount:10.00,
@@ -21,10 +23,9 @@ export class PaymentsPage implements OnInit {
     paymentGateway:'Paynow'
   };
 
-  id:any
   constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService,private actionSheetCtrl: ActionSheetController) {
     this.storageService.get('uuid').then((val) => {
-      this.id = val;
+      this.id = val.replace(/"/g,"");
     });
   }
 
@@ -33,6 +34,12 @@ export class PaymentsPage implements OnInit {
   }
 
   async presentActionSheet() {
+
+    this.storageService.get('uuid').then((val) => {
+      this.id = val.replace(/"/g,"");
+      console.log("ID :" + this.id);
+    });
+
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Make Payment',
       subHeader: 'Select your desired payment method',
@@ -121,11 +128,6 @@ export class PaymentsPage implements OnInit {
 
   async makeRTGSPayment(){
 
-    this.storageService.get('uuid').then((val) => {
-      this.id = val.replace(/"/g,"");
-      console.log(this.id);
-    });
-
     if(this.id === undefined || this.id === ''){
       this.notificationService.presentToast('Failed to initiate payment. Please try again');
     }
@@ -134,11 +136,7 @@ export class PaymentsPage implements OnInit {
   }
 
   async makeUSDPayment(){
-    this.storageService.get('uuid').then((val) => {
-      this.id = val.replace(/"/g,"");
-      console.log(this.id);
-    });
-
+   
     if(this.id === undefined || this.id === ''){
       this.notificationService.presentToast('Failed to initiate payment. Please try again');
     }

@@ -3,7 +3,7 @@
 
   <div class="top-div">
     <div class="ion-text-center" style="margin-bottom:80px;">
-      <img src="../../../assets/images/logo.jpg" style="max-width:200px;padding-top: 80px;">
+      <img src="../../../assets/images/logo.jpg" alt="logo" style="max-width:200px;padding-top: 80px;">
     </div>
   </div>
 
@@ -26,7 +26,7 @@
         <ion-input type="password" name="password" [(ngModel)]="data.password" placeholder="Enter password"></ion-input>
       </ion-item>
 
-      <p style="color:#fff">Dont have an account yet ?  <span style="color:yellow" routerLink="/terms">Click here to register</span></p>
+      <p class="ion-text-center" style="color:#fff">Dont have an account yet ? <br/> <span style="color:yellow" routerLink="/terms">Click here to register</span></p>
       <div class="ion-text-center pro-btn">
         <ion-button shape="round" size="medium" fill="solid" color="secondary" (click)="login()">Get Started</ion-button>
       </div>
@@ -36,6 +36,12 @@
   </div>
 
 </form>
+
+<ion-fab slot="fixed" vertical="top" horizontal="start" (click)="help()">
+  <ion-fab-button>
+    <ion-icon name="help-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
    
 </ion-content>
 <ion-footer class="ion-no-border">

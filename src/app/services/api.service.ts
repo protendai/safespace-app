@@ -51,7 +51,9 @@ export class ApiService {
   pay(data:any): Observable<any>{
     return this.httpService.post('payment',data);
   }
-
+  manualPay(data:any): Observable<any>{
+    return this.httpService.post('payment/pop',data);
+  }
   // Profile
   getProfile(): Observable<any>{
     return this.httpService.get('profile');
