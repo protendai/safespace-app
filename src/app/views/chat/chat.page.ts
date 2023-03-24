@@ -68,6 +68,7 @@ export class ChatPage implements OnInit,OnDestroy {
   let data = { message:this.message };
   this.notificationService.showLoader('Sending ...');
   this.apiService.sendMessage(data).subscribe((v)=>{
+    this.notificationService.dismissLoader();
       console.log(v);
       if(v.success){
         this.message = '';
