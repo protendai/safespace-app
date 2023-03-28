@@ -24,7 +24,7 @@ export class WelcomePage implements OnInit {
       console.log(this.status);
     });
 
-    this.notifications.presentAlert('Notice','Please remember to save your password somehwere safe. If you lose your password please contact support')
+    this.notifications.presentAlert('Notice','Please remember to save your password somewhere safe. If you lose your password please contact support')
   }
 
   gotToHome(){

@@ -21,8 +21,8 @@ export class HelpPage implements OnInit {
 
   async openBrowser(){
 
-    await Browser.open({ url: 'http://localhost:8000/help'});
-    // await Browser.open({ url: 'https://safespace.stapps.co.za/help'});
+    // await Browser.open({ url: 'http://localhost:8000/help'});
+    await Browser.open({ url: 'https://safespace.stapps.co.za/help'});
   }
 
 }
