@@ -10,36 +10,44 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-<form action="">
   <div class="header">
     <p class="ion-text-center">
-      NOTICE!<br/>
-      Our Platform currency supports payments via Paynow. This means you can use the following mobile money transfers<br/>
-      OneMoney,EcoCash,TeleCash
+      Subscription Payments<br/>
+      Please choose your preferred payment method.
     </p>
   </div>
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label position="stacked">Select platform to pay with</ion-label>
-          <ion-select [(ngModel)]="data.paymentMethod" name="paymentMethod" placeholder="Select Platform">
-            <ion-select-option value="Ecocash">EcoCash</ion-select-option>
-            <ion-select-option value="Onemoney">OneMoney</ion-select-option>
-            <ion-select-option value="Telecash">TeleCash</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Phone Number eg 0776630953</ion-label>
-          <ion-input [(ngModel)]="data.phone" name="phone" placeholder="Enter text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Amount (ZWL)</ion-label>
-          <ion-input [(ngModel)]="data.amount" name="amount" placeholder="Enter text" value="10.00"></ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-    <ion-button expand="block" fill="outline" (click)="makePayment()">Make Payment</ion-button>
-  </ion-card>
-</form>
+
+
+  <div class="body">
+    <h4><u>Please Note</u></h4>
+  
+      For manual payments use the following details and pay a total amount of <b><br/> <i>$24 USD</i></b>
+      <hr>
+
+      <h5><u>Ecocash USD</u></h5>
+
+      Please use the following details: <b>CreateInnovate Consultancy<br/> Merchant code : 025980</b>
+
+      <hr/>
+
+      <h5><u>InnBucks USD</u></h5>
+
+      Please send to <br/><b>SafeSpacenet Technologies<br/> 0787 654 034</b>
+
+      <hr/>
+      
+  </div>
+  <br/>
+  <ion-button (click)="presentActionSheet()" fill="outline" expand="block">Select Payment Method</ion-button>
+  <br/>
+<!-- <ion-card (click)="makeUSDPayment()">
+  <div class="label">Card Payments</div>
+  <img alt="Image" src="../../../assets/images/visa_mastercard.jpg" />
+</ion-card>
+
+<ion-card (click)="makeRTGSPayment()">
+  <div class="label">Mobile Money</div>
+  <img alt="Image" src="../../../assets/images/mobile_money.jpg" />
+</ion-card> -->
+
 </ion-content>

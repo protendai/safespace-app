@@ -47,6 +47,23 @@ const routes: Routes = [
     path: 'payments',
     loadChildren: () => import('./views/payments/payments.module').then( m => m.PaymentsPageModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./views/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'welcome/:status',
+    loadChildren: () => import('./views/auth/welcome/welcome.module').then( m => m.WelcomePageModule)
+  },  {
+    path: 'payments-pop',
+    loadChildren: () => import('./views/payments-pop/payments-pop.module').then( m => m.PaymentsPopPageModule)
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./views/help/help.module').then( m => m.HelpPageModule)
+  },
+
+
 ];
 
 @NgModule({

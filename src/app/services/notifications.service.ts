@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
-import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class NotificationsService {
 
   fbToken:any;
 
-  constructor(private router: Router, private toastController: ToastController,private loadingCtrl: LoadingController,private alertController: AlertController) { }
+  constructor(private toastController: ToastController,private loadingCtrl: LoadingController,private alertController: AlertController) { }
 
   //  Basic Notifications
 
@@ -38,25 +38,25 @@ export class NotificationsService {
   async showLoader(infoMessage: any) {
     const loading = this.loadingCtrl.create({
       message: infoMessage,
-      duration: 3000,
+      duration: 10000,
       spinner: 'circles',
     });
 
     (await loading).present();
   }
 
-  dismissLoader() {
-    this.loadingCtrl.dismiss().then((response) => {
-        console.log('Loader closed!', response);
-    }).catch((err) => {
-        console.log('Error occured : ', err);
+  async dismissLoader() {
+    return this.loadingCtrl.dismiss().then((res) => {
+      // console.log('Loading dismissed!', res);
+    }).catch((error) => {
+      // console.log('error', error);
     });
   }
 
   // Firebase and Push Notifications
   initPush() {
     if (Capacitor.getPlatform() !== 'web') {
-      console.log('>>>>>>> Fb setup');
+      // console.log('>>>>>>> Fb setup');
       this.registerPush();
     }
   }
@@ -65,32 +65,34 @@ export class NotificationsService {
     PushNotifications.requestPermissions().then(permission => {
         if (permission.receive === 'granted') {
             PushNotifications.register();
-            console.log('Permission Granted');
+            // console.log('Permission Granted');
         }
         else {
             // If permission is not granted
-            console.log('Permission not granted');
-            console.log('Permission Not Granted');
+            // console.log('Permission not granted');
+            // console.log('Permission Not Granted');
         }
     });
 
     PushNotifications.addListener('registration', (token) => {
-        console.log('>>>>>> FB Token '+ token.value);
+        // console.log('Firebase Token Set '+ token.value);
         this.fbToken = token.value;
         
     });
 
     PushNotifications.addListener('registrationError', (err)=> {
-        console.log(err);
+        // console.log(err);
     }); 
 
     PushNotifications.addListener('pushNotificationReceived', (notifications) => {
-        console.log(notifications);
+        // console.log(notifications);
     });
 
   }
 
+ 
   getfbToken(){
+    // console.log('Firebase Token Get '+ this.fbToken);
     return this.fbToken;
   }
 

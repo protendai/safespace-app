@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 export class ApiService {
   userData$ = new BehaviorSubject<any>('');
   quoteData$ = new BehaviorSubject<any>('');
+  id:any;
   user:any;
   quote:any;
 
@@ -41,10 +42,37 @@ export class ApiService {
     return this.httpService.post('chat',data);
   }
 
+  // Notifications
+  getNotifications(): Observable<any>{
+    return this.httpService.get('notifications');
+  }
+
+  // Payment
+  pay(data:any): Observable<any>{
+    return this.httpService.post('payment',data);
+  }
+  manualPay(data:any): Observable<any>{
+    return this.httpService.post('payment/pop',data);
+  }
+  // Profile
+  getProfile(): Observable<any>{
+    return this.httpService.get('profile');
+  }
+
+  updateProfile(data:any): Observable<any>{
+    return this.httpService.post('profile',data);
+  }
+
+  updatePassword(data:any): Observable<any>{
+    return this.httpService.post('profile/password',data);
+  }
+
+
+  // Storage Calls
   async setQuote(){
     var data  =  await this.storageService.get('quote');
     this.quote = JSON.parse(data);
-    console.log(this.quote);
+    // console.log(this.quote);
   }
 
   getQuotes(){
@@ -61,33 +89,23 @@ export class ApiService {
   async setUser(){
     var data  =  await this.storageService.get('user');
     this.user = JSON.parse(data);
-    console.log(this.user);
-
-    if(this.user.payment_status !== 1){
-      this.router.navigate(['payments']);
-    }
   }
 
   getUser(){
     return this.user;
   }
 
-  // Notifications
-  getNotifications(): Observable<any>{
-    return this.httpService.get('notifications');
+
+  async setUserId(){
+    
+    var data  =  await this.storageService.get('id');
+    this.id = JSON.parse(data);
+    // console.log("LoggedIn User " + this.user);
+
   }
 
-  // Payment
-  pay(data:any): Observable<any>{
-    return this.httpService.post('payment',data);
+  getUserId(){
+    return this.id;
   }
 
-  // Profile
-  getProfile(): Observable<any>{
-    return this.httpService.get('profile');
-  }
-
-  updateProfile(data:any): Observable<any>{
-    return this.httpService.post('profile',data);
-  }
 }

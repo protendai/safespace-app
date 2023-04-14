@@ -6,9 +6,13 @@
 
 <ion-content class="ion-paddidng">
 <div class="profile ion-text-center">
-  <img src="../../../assets/images/profile.png" alt="" style="max-width: 180px;">
+  <img src="../../../assets/images/profile.png" alt="" style="max-width: 130px;">
 </div>
 <div class="input-fields">
+
+  <ion-item>
+    <ion-input name="username" [(ngModel)]="data.username" placeholder="Username"></ion-input>
+  </ion-item>
 
   <ion-item>
     <ion-input name="name" [(ngModel)]="data.name" placeholder="Name"></ion-input>

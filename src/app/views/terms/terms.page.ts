@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationsService } from 'src/app/services/notifications.service';
-
-
-
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-terms',
@@ -12,10 +9,10 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 })
 export class TermsPage implements OnInit {
 
-  constructor( private router: Router,private notificataionService: NotificationsService) { }
+  constructor( private router: Router, private databaseService:DatabaseService) { }
 
   ngOnInit() {
-    this.notificataionService.initPush();
+    this.databaseService.createTable();
   }
 
   hasAccepted(){
