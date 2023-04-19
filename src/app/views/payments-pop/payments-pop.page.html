@@ -35,9 +35,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-textarea name="pop" inputmode="text" [(ngModel)]="data.pop" placeholder="Paste the reference number from your confirmation message here" class="input"></ion-textarea>
+      <ion-input placeholder="Enter reference number" name="pop" inputmode="text" [(ngModel)]="data.pop" maxlength="30"></ion-input>
     </ion-item>
-
+    
     <br>
     <div class="ion-text-center pro-btn">
       <ion-button fill="outline" color="primary" expand="block" (click)="upload()">Upload Proof of Payment</ion-button>
