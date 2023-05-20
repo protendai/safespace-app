@@ -117,7 +117,7 @@ export class StorageService {
       // Clear users
       ret = await db.query('DELETE FROM users;');
       // 
-      let sqlcmd: string = 'INSERT INTO users (user_id,name,surname,username,phone,email,dob,school,payment) VALUES (?,?,?,?,?,?,?,?)';
+      let sqlcmd: string = 'INSERT INTO users (user_id,name,surname,username,phone,email,dob,school,payment) VALUES (?,?,?,?,?,?,?,?,?)';
       let values: Array<any> = [
         user.uuid,
         user.name,
