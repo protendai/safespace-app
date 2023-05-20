@@ -72,9 +72,9 @@ export class RegisterPage implements OnInit {
   
     // Login using ID
     this.apiService.login(data).subscribe(async (v)=>{
+      this.notificationService.dismissLoader();
       try{
-       
-        this.notificationService.dismissLoader();
+        this.storageService.saveUser(v.user);
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
         this.apiService.setUser();

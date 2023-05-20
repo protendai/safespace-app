@@ -51,14 +51,13 @@ export class LoginPage implements OnInit {
     }else{
       this.notificationService.showLoader('Login In ...');
       // Login using ID
-      this.apiService.login(this.data).subscribe(async (v)=>{
+      this.apiService.login(this.data).subscribe((v)=>{
+        this.notificationService.dismissLoader();
+        
           if(v.error){
-            console.log(v.error);
-            this.notificationService.dismissLoader();
             this.notificationService.presentToast('Login failed , Please check your logins and try again');
           }else{
-            console.log(v.user);
-            this.notificationService.dismissLoader();
+            this.storageService.saveUser(v.user);
             // Save Token and User Data
             this.storageService.store("token",v.access_token);
             // Navigate to Welcome Page
