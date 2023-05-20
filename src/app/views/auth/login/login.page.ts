@@ -6,8 +6,6 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Network } from '@capacitor/network';
 import { AlertController } from '@ionic/angular';
 import { SqliteService } from 'src/app/services/sqlite.service';
-import { createSchema } from 'src/app/utils/create-schema';
-import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,22 +25,24 @@ export class LoginPage implements OnInit {
     private apiService:ApiService,
     private storageService: StorageService,
     private router:Router,
-    private alertController: AlertController,
     ) { 
-
-      Network.addListener('networkStatusChange', status => {
-        // console.log('Network status changed', status.connected);
-        if(status.connected !== true){
-          this.presentAlert('Your phone is not connected to the internet');
-        }
-      }); 
-
+      this.setupDatabase();
+      Network.addListener('networkStatusChange', status => { if(status.connected !== true){ this.notificationService.presentAlert('Network Error','Your phone is not connected to the internet'); } }); 
       this.data.fbToken = this.notificationService.getfbToken();
       console.log('set fb token ' + this.data.fbToken);
     }
 
   ngOnInit() {
-    this.checkNetwork();
+    
+  }
+
+  async setupDatabase(){
+    this.notificationService.showLoader('Loading...');
+    let res = await this.storageService.setupDatabase();
+    this.notificationService.dismissLoader();
+    if(res === true){
+      this.router.navigate(['/tabs'])
+    }
   }
 
   async login(){
@@ -61,11 +61,6 @@ export class LoginPage implements OnInit {
             this.notificationService.dismissLoader();
             // Save Token and User Data
             this.storageService.store("token",v.access_token);
-            this.storageService.store("user",v.user);
-            this.storageService.store("uuid",v.user.uuid);
-            this.storageService.store("payment",v.user.payment_status);
-            this.storageService.setPayment(v.user.payment_status);
-            this.storageService.saveToDb(v.access_token);
             // Navigate to Welcome Page
             this.router.navigate(['/welcome/' + 1]);
           }
@@ -77,23 +72,6 @@ export class LoginPage implements OnInit {
       });
     }
     
-  }
-
-  async checkNetwork(){
-      const status = await Network.getStatus();
-      if(status.connected !== true){
-        this.presentAlert('Your phone is not connected to the internet');
-      }
-  }
-
-  async presentAlert(infoMessage:any) {
-    const alert = await this.alertController.create({
-      header: 'Notice!',
-      message: infoMessage,
-      buttons: ['Try Again'],
-    });
-
-    await alert.present();
   }
 
   help(){

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
-import { DatabaseService } from 'src/app/services/database.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SqliteService } from 'src/app/services/sqlite.service';
 import { StorageService } from 'src/app/services/storage.service';

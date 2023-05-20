@@ -41,9 +41,9 @@ export class ChatPage implements OnInit,OnDestroy {
 
 
   async checkPayment(){
-    this.storageService.getPayment().subscribe((payment) => {
-      console.log(payment);
-      if(payment != 1){
+    this.storageService.getUser().then((res) => {
+      console.log(res.payment);
+      if(res.payment != 1){
         this.router.navigate(['/payments']);
       }
     });

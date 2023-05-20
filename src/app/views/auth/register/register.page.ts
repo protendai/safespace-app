@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { DatabaseService } from 'src/app/services/database.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SqliteService } from 'src/app/services/sqlite.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -26,7 +25,6 @@ export class RegisterPage implements OnInit {
     private notificationService: NotificationsService,
     private router: Router,
     private sqliteService : SqliteService,
-    private databaseService: DatabaseService
   ) { }
 
   ngOnInit() {
@@ -62,8 +60,7 @@ export class RegisterPage implements OnInit {
 
   login(user:any){
     this.storageService.store("id",user.uuid);
-    this.databaseService.saveData(user);
-    this.databaseService.getData();
+    this.storageService.saveUser(user);
     this.notificationService.showLoader('Login In ...');
     
     let data = {
@@ -80,9 +77,6 @@ export class RegisterPage implements OnInit {
         this.notificationService.dismissLoader();
         // Save Token and User Data
         this.storageService.store("token",v.access_token);
-        this.storageService.store("user",v.user);
-        this.storageService.store("payment",v.user.payment_status);
-        this.storageService.setPayment(v.user.payment_status);
         this.apiService.setUser();
         // Navigate to Tabs
         this.router.navigate(['/welcome/' + 0]);

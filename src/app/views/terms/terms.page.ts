@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatabaseService } from 'src/app/services/database.service';
+
 
 @Component({
   selector: 'app-terms',
@@ -9,10 +9,10 @@ import { DatabaseService } from 'src/app/services/database.service';
 })
 export class TermsPage implements OnInit {
 
-  constructor( private router: Router, private databaseService:DatabaseService) { }
+  constructor( private router: Router) { }
 
   ngOnInit() {
-    this.databaseService.createTable();
+    
   }
 
   hasAccepted(){

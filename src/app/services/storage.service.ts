@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { createSchema } from '../utils/create-schema';
+
+import { createSchema } from '../utils/db-setup';
 import { SqliteService } from './sqlite.service';
 
 @Injectable({
@@ -9,9 +9,6 @@ import { SqliteService } from './sqlite.service';
 })
 export class StorageService {
 
-  private item = [];
-  hasPaid = new BehaviorSubject<number>(0);
-  
   constructor(private sqliteService: SqliteService) { }
 
   async store(storageKey: string, val: any){
@@ -38,94 +35,110 @@ export class StorageService {
     await Preferences.clear();
   }
 
-  async createDb(){
+  // ### Sqlite
+  async getConnection(){
+
+    let db;
+    let isopen;
+
+    console.log("$$$ checking connection... ");
+    let checkConn = await this.sqliteService.isConnection('safespace.db');
     
-      try{
-        // Check if Database exists
-        let res = await this.sqliteService.isDatabase('app-db');
-        if(res.result === true){
-          // this.sqliteService.deleteOldDatabases("",["app-db"]);
-          console.log('$$$ Database already exists');
-          return true;
-        }
-        // Connect to DB and create new
-        let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
+    console.log("$$$ connection status "+ checkConn.result);
 
-        // open db app-db
-        await db.open();
+    if(checkConn.result == true){  
+      console.log("$$$ closing connections... ");
+      db = await this.sqliteService.retrieveConnection('safespace.db');
+    }else{
+      console.log("$$$ creating connection... ");
+      db =  await this.sqliteService.createConnection('safespace.db',false,'no-encryption',1);
+    }
+    
+    isopen = await db.isDBOpen();
 
+    if(isopen.result !== true){ 
+      console.log("$$$ opening db... " + isopen.result);
+      await db.open();
+    } 
+
+    return db;
+  }
+
+  async setupDatabase(){
+    try {
+
+      console.log('$$$ Setup Database');
+      // initialize the connection
+      let db = await this.getConnection();
+
+      //  check if user exists
+      let user = await this.getUser();
+
+      if(!user){
         // create tables in db
-        let ret: any = await db.execute(createSchema);
-        console.log('$$$$ Create Tables' + ret.changes.changes);
-        if (ret.changes.changes < 0) {
-          return Promise.reject(new Error('Execute createSchema failed'));
-        }
-        // Close connection
-        // console.log('$$$ Close Connection');
-        await this.sqliteService.closeConnection('app-db');
-        await db.close();
-        // if not errors return true
-        return true;
-      }catch(e){
+        let ret: any = await db.execute(createSchema);       
+        if (ret.changes.changes < 0) { console.log('$$$ create tables in db ' + ret.changes.changes); }
         return false;
       }
+      
+      return true;
+
+    }catch (err) {
+      console.log('$$$ Errors' + err);
+      return err;
+    }
   }
-  
-  async saveToDb(data: string){
-    try{
-      
-      let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-     
-      await db.open();
-      
 
-      console.log('$$$ Insert data');
-      var sqlcmd = 'INSERT INTO users (user_id) VALUES (?)';
-      var values = [data];
-      let ret:any = await db.run(sqlcmd, values);
+  async getUser(){
+    try {
+      // initialize the connection
+      let ret:any;
+      let db = await this.getConnection();
 
-      console.log(ret.changes.changes);
-      if (ret.changes.changes  !== 1) {
-        console.log('$$$ changes in db ' + ret.changes.changes);
-        return Promise.reject(new Error('Execute save user failed'));
+      // select all users in db
+      ret = await db.query('SELECT * FROM users;');
+      
+      if (ret.values.length === 1) { 
+        console.log('$$$ saved user ' + ret.values[0].name +' '+ ret.values[0].surname +' '+ ret.values[0].phone);
       }
 
-      console.log('$$$ Close Connection');
-      await this.sqliteService.closeConnection('app-db');
-      await db.close();
-
-      return true;
-    } catch (err) {
-      return Promise.reject(err);
+      return ret.values[0];
+    }catch (err) {
+      console.log('$$$ Errors' + err);
     }
   }
-
-  async getFromDb(){
-    try{
-      console.log("check if database exists");
-      let db = await this.sqliteService.createConnection('app-db',false,'no-encryption',1);
-      // open db app-db
-      await db.open();
-      // select the created row
-      let ret:any = await db.query('SELECT * FROM users;');
-      // console log ID
-      console.log("$$$ User ID : " + ret.values[0].user_id);
-      // close connection to DB
-      console.log('$$$ Close Connection');
-      await this.sqliteService.closeConnection('app-db');
-      await db.close();
-      //  return user id
-      return ret.values[0].user_id;
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  }
-
-  // Get Set
-  setItem(item: never[]){this.item = item;}
-  getItem(){ return this.item;}
-  // Payment
-  setPayment(data:number){ this.hasPaid.next(data); }
-  getPayment(): Observable<number> { console.log(this.hasPaid); return this.hasPaid; }
   
+  async saveUser(user:any){
+
+    try {
+      let ret:any;
+      let db = await this.getConnection();
+      
+      // Clear users
+      ret = await db.query('DELETE FROM users;');
+      // 
+      let sqlcmd: string = 'INSERT INTO users (user_id,name,surname,username,phone,email,dob,school,payment) VALUES (?,?,?,?,?,?,?,?)';
+      let values: Array<any> = [
+        user.uuid,
+        user.name,
+        user.surname,
+        user.username,
+        user.phone,
+        user.email,
+        user.dob,
+        user.school,
+        user.payment
+      ];
+      ret = await db.run(sqlcmd, values);
+
+      this.getUser();
+
+      console.log("$$$ Save user " + ret.changes.lastId);
+      return ret.changes.lastId;
+      
+    }catch (err) {
+      console.log('$$$ Errors' + err);
+    }
+  }
+
 }

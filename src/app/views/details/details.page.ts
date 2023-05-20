@@ -11,7 +11,9 @@ export class DetailsPage implements OnInit {
 
   item:any;
   constructor(private storageService: StorageService,private navCTRL: NavController) { 
-    this.item = this.storageService.getItem();
+    this.storageService.get('item').then((res)=>{
+      this.item = res;
+    });
   }
 
   ngOnInit() {
