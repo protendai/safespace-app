@@ -29,17 +29,17 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {}
 
-  async getUser(){
-    var data  =  await this.storageService.get('user');
-    this.user = JSON.parse(data);
-    this.data.username    = this.user.username;
-    this.data.name    = this.user.name;
-    this.data.surname = this.user.surname;
-    this.data.phone   = this.user.phone;
-    this.data.email   = this.user.email;
-    this.data.dob     = this.user.dob;
-    this.data.school  = this.user.school;
-    console.log(this.user);
+  getUser(){
+     this.storageService.getUser().then((res) =>{
+      this.data.username    = res.username;
+      this.data.name    = res.name;
+      this.data.surname = res.surname;
+      this.data.phone   = res.phone;
+      this.data.email   = res.email;
+      this.data.dob     = res.dob;
+      this.data.school  = res.school;
+      console.log(res);
+    }); 
   }
 
   updateProfile(){

@@ -23,15 +23,10 @@ export class ChatPage implements OnInit,OnDestroy {
     //  Start timer
     this.t = setInterval(() => {
       this.getMessages();
-    }, 10000);
+    }, 5000);
   }
 
   ngOnInit() {
-    //  Get user data
-    this.apiService.setUser();
-    this.user = this.apiService.getUser();
-    console.log(this.apiService.user);
-    // disable skeletons
     this.loaded = true;
   }
 
@@ -43,12 +38,22 @@ export class ChatPage implements OnInit,OnDestroy {
   async checkPayment(){
     this.storageService.getUser().then((res) => {
       console.log(res.payment);
-      if(res.payment != 1){
-        this.router.navigate(['/payments']);
+      if(res !== undefined){
+        if(res.payment != 1){
+          this.notificationService.presentAlert('Subscription Issue','Please make your subscription to user chat');
+          this.router.navigate(['/payments']);
+        }
+      }else{
+        this.notificationService.presentAlert('Subscription Issue','We could not verify your subscription to chat');
+        this.router.navigate(['/tabs']);
       }
+    },(error)=>{
+      this.notificationService.presentAlert('Subscription Issue','We could not verify your subscription to chat');
+      this.router.navigate(['/tabs']);
     });
     
   }
+
   async getMessages(){
     this.apiService.getMessages().subscribe(async (v)=>{
       try{

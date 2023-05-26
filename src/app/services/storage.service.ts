@@ -127,11 +127,11 @@ export class StorageService {
         user.email,
         user.dob,
         user.school,
-        user.payment
+        user.payment_status
       ];
       ret = await db.run(sqlcmd, values);
 
-      this.getUser();
+      // this.getUser();
 
       console.log("$$$ Save user " + ret.changes.lastId);
       return ret.changes.lastId;

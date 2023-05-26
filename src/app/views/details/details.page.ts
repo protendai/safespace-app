@@ -9,10 +9,19 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class DetailsPage implements OnInit {
 
-  item:any;
+  img:string = '';
+  title:string = '';
+  description:string = '';
+
   constructor(private storageService: StorageService,private navCTRL: NavController) { 
-    this.storageService.get('item').then((res)=>{
-      this.item = res;
+    this.storageService.get('learn').then((res)=>{
+      console.log(JSON.parse(res));
+      let item = JSON.parse(res);
+     
+      this.img = item.img;
+      this.title = item.title;
+      this.description = item.description;
+
     });
   }
 

@@ -7,8 +7,9 @@ export const createSchema: string = `
         username TEXT NOT NULL,
         dob TEXT NULL,
         phone TEXT NULL,
+        email TEXT NULL,
         school TEXT NULL,
-        payment INTEGER NOT NULL,
+        payment INTEGER NULL,
         last_modified INTEGER DEFAULT (strftime('%s', 'now'))
     );
 `;

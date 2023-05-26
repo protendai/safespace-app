@@ -57,7 +57,9 @@ export class LoginPage implements OnInit {
           if(v.error){
             this.notificationService.presentToast('Login failed , Please check your logins and try again');
           }else{
+            console.log(v.user);
             this.storageService.saveUser(v.user);
+           
             // Save Token and User Data
             this.storageService.store("token",v.access_token);
             // Navigate to Welcome Page
