@@ -29,6 +29,10 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {}
 
+  ionViewDidEnter(){
+    this.getUser();
+  }
+
   getUser(){
      this.storageService.getUser().then((res) =>{
       this.data.username    = res.username;
@@ -53,6 +57,9 @@ export class ProfilePage implements OnInit {
         }else{
           this.notificationService.presentToast('Error' + v);
         }
+    },(error) =>{
+      this.notificationService.presentAlert('Error','We failed to process your request ' + error.error.message);
+      this.router.navigate(['error'])
     });
 
   }
@@ -64,7 +71,11 @@ export class ProfilePage implements OnInit {
         if(v.success){
           console.log(v.success);
           this.storageService.removeItem('user');
-          this.storageService.store('user',v.success);
+          this.storageService.updateUser(v.success).then((res) =>{
+            if(res > 1){
+              this.getUser();
+            }
+          })
         }else{
           this.notificationService.presentToast('Error' + v);
         }

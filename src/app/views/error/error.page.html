@@ -1,0 +1,25 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  
+  <div class="content ion-text-center">
+
+    <div class="inner">
+      <h3>!Oops</h3>
+      <p class="ion-text-center">
+        It looks like we failed to process your request.<br/>
+        Please try again.<br/>
+        If the problem persists please logout and login again
+      </p>
+    </div>
+
+    <div class="ion-text-center">
+      <img src="../../../assets/warning.svg" alt="" style="max-width: 250px;">
+    </div>
+    <br/><br/>
+    <div class="ion-text-center">
+        <ion-button shape="round" fill="outline" (click)="back()">Try Again</ion-button>
+        <p>____ or ____</p>
+        <ion-button shape="round" fill="outline" (click)="logout()">Login Again</ion-button>
+    </div>
+  </div>
+  
+</ion-content>

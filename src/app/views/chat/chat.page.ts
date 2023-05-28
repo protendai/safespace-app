@@ -81,6 +81,9 @@ export class ChatPage implements OnInit,OnDestroy {
       }else{
         this.notificationService.presentToast('Error' + v);
       }
+  },(error) =>{
+    this.notificationService.presentAlert('Error','We failed to process your request ' + error.error.message);
+    this.router.navigate(['error'])
   });
   }
 

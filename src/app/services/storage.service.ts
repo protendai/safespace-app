@@ -141,4 +141,36 @@ export class StorageService {
     }
   }
 
+  async updateUser(user:any){
+    try {
+      let sqlcmd:string;
+      let ret:any;
+
+      let db = await this.getConnection();
+     
+
+      sqlcmd =`UPDATE users SET name=`+user.name+`,surname=`+user.surname+`,username=`+user.username+`,phone=`+user.phone+`,email=`+user.email+`,dob=`+user.dob+`,school=`+user.school+`,payment=`+user.payment+` WHERE id=1`;
+      "user_id,name,surname,username,phone,email,dob,school,payment"
+      ret = await db.run(sqlcmd);
+
+      console.log('$$$ updated  user 1 from db ' + ret.changes.changes);
+    
+      return ret.changes.changes;
+    }catch (err) {
+      console.log('$$$ Errors ' + err);
+    }
+  }
+
+  async deleteDB(){
+  
+    let db = await this.getConnection();
+    await db.open();
+    await db.delete();
+
+    this.sqliteService.deleteOldDatabases('stories.db')
+    .then((res) => {
+      console.log('$$$ Delete Database ' +res);
+    });
+  }
+
 }

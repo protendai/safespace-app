@@ -24,10 +24,9 @@ export class PaymentsPage implements OnInit {
   };
 
   constructor(private storageService: StorageService,private alertController: AlertController, private apiService:ApiService,private router:Router, private notificationService: NotificationsService,private actionSheetCtrl: ActionSheetController) {
-    this.storageService.get('uuid').then((val) => {
-      this.id = val.replace(/"/g,"");
-    });
+    this.getUser();
   }
+
 
   ngOnInit() {
     // this.presentAlert()
@@ -108,6 +107,13 @@ export class PaymentsPage implements OnInit {
   goBack(){
     this.router.navigate(['/tabs']);
   }
+
+  getUser(){
+    this.storageService.getUser().then((res) =>{
+     this.id    = res.user_id;
+     console.log("Paymeny user id = " + this.id);
+   }); 
+ }
 
   makePayment(){
     console.log(this.data);

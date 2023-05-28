@@ -62,6 +62,10 @@ const routes: Routes = [
     path: 'help',
     loadChildren: () => import('./views/help/help.module').then( m => m.HelpPageModule)
   },
+  {
+    path: 'error',
+    loadChildren: () => import('./views/error/error.module').then( m => m.ErrorPageModule)
+  },
 
 
 ];
