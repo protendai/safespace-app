@@ -27,7 +27,7 @@ export class ChatPage implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
-    this.loaded = true;
+   
   }
 
   goBack(){
@@ -57,7 +57,7 @@ export class ChatPage implements OnInit,OnDestroy {
   async getMessages(){
     this.apiService.getMessages().subscribe(async (v)=>{
       try{
-       
+        this.loaded = true;
         if(v.success){
           this.messages = v.success[0].messages;
           this.userId = v.success[0].user_id;
