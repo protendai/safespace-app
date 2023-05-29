@@ -12,9 +12,7 @@
   <div class="bottom-div">
 
     <div class="p-top">
-      <p class="ion-text-center">
-       Welcome to Safespace.<br/>Let's get started
-      </p>
+      <p class="ion-text-center" style="color:#fff">Dont have an account yet ? <br/> <span style="color:yellow" routerLink="/terms">Click here to register</span></p>
     </div>
     
     <form>
@@ -26,7 +24,8 @@
         <ion-input type="password" name="password" [(ngModel)]="data.password" placeholder="Enter password"></ion-input>
       </ion-item>
 
-      <p class="ion-text-center" style="color:#fff">Dont have an account yet ? <br/> <span style="color:yellow" routerLink="/terms">Click here to register</span></p>
+      <p class="ion-text-center" style="color:#fff">by login in  you accept our <a href="https://safespace.stapps.co.za/privacy" style="color:yellow">privacy policy</a></p>
+
       <div class="ion-text-center pro-btn">
         <ion-button shape="round" size="medium" fill="solid" color="secondary" (click)="login()">Get Started</ion-button>
       </div>
