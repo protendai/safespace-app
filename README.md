@@ -1,4 +1,4 @@
-# Your App Name
+# SafeSpace
 
 Welcome to the repository for SafeSpace, a mobile application built with Ionic and Angular.
 
@@ -43,4 +43,4 @@ Report issues, bugs, or feature requests on the [Issue Tracker](https://github.c
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the license file for details.
